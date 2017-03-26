@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <dl class="job-table[if_job_highlighted] highlighted[/if_job_highlighted] dl-horizontal">
+                <dt>Tên công việc</dt>
+                <dd>[job_icon] [job_link][job_title][/job_link]</dd>
+                <dt>Thời gian</dt>
+                <dd>Client-side scripting generally refers to the category of computer programs on the web that are executed client-side i.e. by the user's web browser.</dd>
+                <dt>Tiền lương</dt>
+                <dd>[job_field1_label], [job_field1]</dd>
+                <dt>Địa điểm</dt>
+                <dd>[job_field4_label], [job_field4]</dd>                
+            </dl>
+            [job_link]<span class="pull-right clearfix">Xem chi tiết <i class="fa fa-angle-double-right" aria-hidden="true"></i></span>[/job_link]
+            
+        [job_loop]
+        <div class="job[job_row_number] job[job_id] [job_odd_even]">            
+
+            <table class="job-table[if_job_highlighted] highlighted[/if_job_highlighted]">
+                <tr>
+                    <th scope="row">Title</th>
+                    <td>[job_link][job_title][/job_link]</td>
+                </tr>                
+                [job_field_loop]
+                [if_job_field]
+                <tr>
+                    <th scope="row">[job_field_label]</th>
+                    <td>[job_field]</td>
+                </tr>
+                [/if_job_field]
+                [/job_field_loop]
+                <tr>
+                    <td colspan="2" class="text-right">[job_link]Xem chi tiết <i class="fa fa-angle-double-right" aria-hidden="true"></i>[/job_link]</td>
+                </tr>
+            </table>
+        </div><br/><br/>
+        [/job_loop]
+
+        [if_job_page_count]
+        <div class="job-nav">
+            <div class="previous">[job_page_previous_link]Page [job_page_previous_number][/job_page_previous_link]</div>
+            <div class="this">Jobs [job_page_minimum]-[job_page_maximum] of [job_total]</div>
+            <div class="next">[job_page_next_link]Page [job_page_next_number][/job_page_next_link]</div>
+        </div>
+        [/if_job_page_count]
+
+        [response]
+        <div class="form" id="inquiry">
+            <div class="form-group">
+                <label for="name">お名前 <span class="label label-danger req">必須</span></label>
+                [text* name class:form-control id:name placeholder "お名前"]
+            </div>
+            <div class="form-group">
+                <label for="email">メールアドレス <span class="label label-danger req">必須</span></label>
+                [email* email-831 class:form-control id:email placeholder "メール"]                
+            </div>
+            <div class="form-group">
+                <label for="mobile">お電話番号 <span class="label label-danger req">必須</span></label>
+                [text* tel id:mobile class:form-control]
+            </div>
+            <div class="form-group">
+                <label for="checkboxes">問い合わせ項目</label>
+                <div class="checkbox cus-check">
+                    [checkbox checkbox-48 use_label_element "治療の相談がしたい" "治療の予約が取りたい" "治療費用について" "その他の問い合わせ"]    	
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="message">メッセージ本文 <span class="label label-danger">必須</span></label>
+                [textarea* textarea-153 id:message class:form-control placeholder "ご自由にご記入ください"]
+            </div>
+            <p class="text-left">[submit class:btn class:btn-primary class:btn-lg "　送信　"]</p>
+        </div>    
+    </body>
+</html>
