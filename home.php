@@ -29,9 +29,9 @@
 
 <div class="container">
     <div class="row">
-        <div class="ibox float-e-margins clearfix">
+        <div class="ibox shadow">
             <div class="ibox-title">
-                <h5>TÌM VIỆC LÀM PHÙ HỢP</h5>
+                <h5 class="text-uppercase">TÌM VIỆC LÀM PHÙ HỢP</h5>
             </div>
             <div class="ibox-content">
                 <form name="search" id="frm_block_quick_search" action="" method="post">
@@ -59,757 +59,293 @@
                                 </div>
                             </div>
                             <div class="mb10 col-sm-6">
-                                <select data-placeholder="Tất cả ngành nghề" multiple="" class="chosen-select form-control" id="cateListMainSearch" name="job_category[]" tabindex="-1" style="display: none;">
-                                    <option value="72">In ấn/ Xuất bản</option>
-                                    <option value="39">Khác</option>
-                                </select>
-                                <div class="chosen-container chosen-container-multi" id="cateListMainSearch_chosen">
-                                    <ul class="chosen-choices"><li class="search-field">
-                                            <input type="text" value="Tất cả ngành nghề" class="default" autocomplete="off" tabindex="-1">
-                                        </li>
-                                    </ul>
-                                    <div class="chosen-drop"><ul class="chosen-results"></ul></div>
-                                </div>
+                                <select multiple="true" class="chosen-select form-control" id="cateList" name="job_category[]">
+                                    <option value="1">Cửa hàng ăn uống</option>
+                                    <option value="2">Kho hàng, công xưởng</option>
+                                    <option value="3">Phân loại hàng hoá</option>
+                                    <option value="4">Văn phòng</option>
+                                    <option value="5">Khách sạn</option>
+                                    <option value="6">Phát tờ rơi</option>
+                                    <option value="7">Chế biến thực phẩm</option>
+                                    <option value="8">Nhân viên nhà bếp</option>
+                                    <option value="9">Quán nhậu</option>
+                                    <option value="10">Giao hàng, vận chuyển đồ đạc</option>
+                                </select>                                
                             </div>
-                            <div class="mb10 col-sm-6">
-                                <select data-placeholder="Tất cả địa điểm" multiple="" class="chosen-select form-control" id="locationMainSearch" name="job_location[]" tabindex="-1" style="display: none;">
-                                    <option value="29">Hồ Chí Minh</option>
-                                    <option value="24">Hà Nội</option>                                                            
+                            <div class="mb10 col-sm-6">                                
+                                <select name="place_category[]" multiple="true" class="chosen-select form-control" id="listPlace">
+                                    <option value="01" class="dropdown-select address01 option" id="sel_pref_code-1">北海道(Hokkaido)</option>
+                                    <option value="02" class="dropdown-select address01 option" id="sel_pref_code-2">青森県(Aomori)</option>
+                                    <option value="03" class="dropdown-select address01 option" id="sel_pref_code-3">岩手県(Iwate)</option>
+                                    <option value="04" class="dropdown-select address01 option" id="sel_pref_code-4">宮城県(Miyagi)</option>
+                                    <option value="05" class="dropdown-select address01 option" id="sel_pref_code-5">秋田県(Akita)</option>
+                                    <option value="06" class="dropdown-select address01 option" id="sel_pref_code-6">山形県(Yamagata)</option>
+                                    <option value="07" class="dropdown-select address01 option" id="sel_pref_code-7">福島県(Fukushima)</option>
+                                    <option value="08" class="dropdown-select address01 option" id="sel_pref_code-8">茨城県(Ibaraki)</option>
+                                    <option value="09" class="dropdown-select address01 option" id="sel_pref_code-9">栃木県(Tochigi)</option>
+                                    <option value="10" class="dropdown-select address01 option" id="sel_pref_code-10">群馬県(Gunma)</option>
+                                    <option value="11" class="dropdown-select address01 option" id="sel_pref_code-11">埼玉県(Saitama)</option>
+                                    <option value="12" class="dropdown-select address01 option" id="sel_pref_code-12">千葉県(Chiba)</option>
+                                    <option value="13" class="dropdown-select address01 option" id="sel_pref_code-13">東京都(Tokyo)</option>
+                                    <option value="14" class="dropdown-select address01 option" id="sel_pref_code-14">神奈川県(Kanagawa)</option>
+                                    <option value="15" class="dropdown-select address01 option" id="sel_pref_code-15">新潟県(Niigata)</option>
+                                    <option value="16" class="dropdown-select address01 option" id="sel_pref_code-16">富山県(Toyama)</option>
+                                    <option value="17" class="dropdown-select address01 option" id="sel_pref_code-17">石川県(Ishikawa)</option>
+                                    <option value="18" class="dropdown-select address01 option" id="sel_pref_code-18">福井県(Fukui)</option>
+                                    <option value="19" class="dropdown-select address01 option" id="sel_pref_code-19">山梨県(Yamanashi)</option>
+                                    <option value="20" class="dropdown-select address01 option" id="sel_pref_code-20">長野県(Nagano)</option>
+                                    <option value="21" class="dropdown-select address01 option" id="sel_pref_code-21">岐阜県(Gifu)</option>
+                                    <option value="22" class="dropdown-select address01 option" id="sel_pref_code-22">静岡県(Shizuoka)</option>
+                                    <option value="23" class="dropdown-select address01 option" id="sel_pref_code-23">愛知県(Aichi)</option>
+                                    <option value="24" class="dropdown-select address01 option" id="sel_pref_code-24">三重県(Mie)</option>
+                                    <option value="25" class="dropdown-select address01 option" id="sel_pref_code-25">滋賀県(Shiga)</option>
+                                    <option value="26" class="dropdown-select address01 option" id="sel_pref_code-26">京都府(Kyoto)</option>
+                                    <option value="27" class="dropdown-select address01 option" id="sel_pref_code-27">大阪府(Osaka)</option>
+                                    <option value="28" class="dropdown-select address01 option" id="sel_pref_code-28">兵庫県(Hyogo)</option>
+                                    <option value="29" class="dropdown-select address01 option" id="sel_pref_code-29">奈良県(Nara)</option>
+                                    <option value="30" class="dropdown-select address01 option" id="sel_pref_code-30">和歌山県(Wakayama)</option>
+                                    <option value="31" class="dropdown-select address01 option" id="sel_pref_code-31">鳥取県(Tottori)</option>
+                                    <option value="32" class="dropdown-select address01 option" id="sel_pref_code-32">島根県(Shimane)</option>
+                                    <option value="33" class="dropdown-select address01 option" id="sel_pref_code-33">岡山県(Okayama)</option>
+                                    <option value="34" class="dropdown-select address01 option" id="sel_pref_code-34">広島県(Hiroshima)</option>
+                                    <option value="35" class="dropdown-select address01 option" id="sel_pref_code-35">山口県(Yamaguchi)</option>
+                                    <option value="36" class="dropdown-select address01 option" id="sel_pref_code-36">徳島県(Tokushima)</option>
+                                    <option value="37" class="dropdown-select address01 option" id="sel_pref_code-37">香川県(Kagawa)</option>
+                                    <option value="38" class="dropdown-select address01 option" id="sel_pref_code-38">愛媛県(Ehime)</option>
+                                    <option value="39" class="dropdown-select address01 option" id="sel_pref_code-39">高知県(Kochi)</option>
+                                    <option value="40" class="dropdown-select address01 option" id="sel_pref_code-40">福岡県(Fukuoka)</option>
+                                    <option value="41" class="dropdown-select address01 option" id="sel_pref_code-41">佐賀県(Saga)</option>
+                                    <option value="42" class="dropdown-select address01 option" id="sel_pref_code-42">長崎県(Nagasaki)</option>
+                                    <option value="43" class="dropdown-select address01 option" id="sel_pref_code-43">熊本県(Kumamoto)</option>
+                                    <option value="44" class="dropdown-select address01 option" id="sel_pref_code-44">大分県(Oita)</option>
+                                    <option value="45" class="dropdown-select address01 option" id="sel_pref_code-45">宮崎県(Miyazaki)</option>
+                                    <option value="46" class="dropdown-select address01 option" id="sel_pref_code-46">鹿児島県(Kagoshima)</option>
+                                    <option value="47" class="dropdown-select address01 option" id="sel_pref_code-47">沖縄県(Okinawa)</option>
                                 </select>
-                                <div class="chosen-container chosen-container-multi" title="" id="locationMainSearch_chosen">
-                                    <ul class="chosen-choices">
-                                        <li class="search-field">
-                                            <input type="text" value="Tất cả địa điểm" class="default" autocomplete="off" tabindex="-1">
-                                        </li>
-                                    </ul>
-                                    <div class="chosen-drop">
-                                        <ul class="chosen-results"></ul>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="col-sm-3">
-                            <div class="mb10 col-sm-12">
-                                <input onclick="ga('send', 'event', 'job_search', 'click', 'search_on_homepage');" type="submit" class="btn btn-primary" id="btnSearch" value="Tìm kiếm" style="width:100%;" data-original-title="" title="">
-                            </div>                            
+                            <input type="submit" class="btn btn-primary" id="btnSearch" value="Tìm kiếm" />                
                         </div>
-
                     </div>
                 </form>
-            </div>    
-            <div class="ibox-footer bg-pink no-borders" style="font-size:14px;text-align:center">
-                <p><a href="#"><span style="color:red"><strong>Đăng nhập và tải hồ sơ</strong></span></a> để có thể xin việc mọi lúc mọi nơi</p>
             </div>
-
-        </div>
+        </div><!--End .ibox-->
     </div><!--End .row-->
     <div class="space clearfix"></div>
-    <div class="row clearfix">
-        <h3 class="banner-group-title text-center">Tìm kiếm công việc theo trình độ tiếng Nhật</h3>        
-        <ul class="level-categories list-unstyled">
-            <li class="col-sm-3 col-xs-6">
-                <a onclick="ga('send', 'event', 'search_job_by', 'click', 'n1')" href="http://japan.vietnamworks.com/japan/type/?jpl=n01level" target="_blank" class="text-uppercase hi-icon hi-icon-text hi-icon-n1"></a>
-                <span class="category-title">Trình độ N1</span>
-            </li>
-            <li class="col-sm-3 col-xs-6">
-                <a onclick="ga('send', 'event', 'search_job_by', 'click', 'n2')" href="http://japan.vietnamworks.com/japan/type/?jpl=n02level" target="_blank" class="text-uppercase hi-icon hi-icon-text hi-icon-n2">Trình độ N2</a>
-                <span class="category-title">Trình độ N2</span>
-            </li>
-            <li class="col-sm-3 col-xs-6">
-                <a onclick="ga('send', 'event', 'search_job_by', 'click', 'n3')" href="http://japan.vietnamworks.com/japan/type/?jpl=n03level" target="_blank" class="text-uppercase hi-icon hi-icon-text hi-icon-n3">Trình độ N3</a>
-                <span class="category-title">Trình độ N3</span>
-            </li>
-            <li class="col-sm-3 col-xs-6">
-                <a onclick="ga('send', 'event', 'search_job_by', 'click', 'beginner')" href="http://japan.vietnamworks.com/japan/type/?jpl=japanesebeginner" target="_blank" class="text-uppercase hi-icon hi-icon-text hi-icon-n0">Trình độ Mới biết</a>
-                <span class="category-title">Trình độ Mới biết</span>
-            </li>
-        </ul>                
-    </div>
     <div class="row">
-        <div class="col-sm-12 left_side">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Việc làm mới</h5>
+        <div class="ibox box-level shadow text-center">
+            <div class="ibox-title">
+                <h5 class="text-uppercase text-left">Tìm kiếm công việc theo trình độ tiếng Nhật</h5>
+            </div>
+            <ul class="level clearfix">
+                <li class="col-sm-3 col-xs-6">
+                    <a href="#" target="_blank" class="text-uppercase text-center icon-square">N1</a>
+                    <span class="text-uppercase">Trình độ N1</span>
+                </li>
+                <li class="col-sm-3 col-xs-6">
+                    <a href="#" target="_blank" class="text-uppercase text-center icon-square">N2</a>
+                    <span class="text-uppercase">Trình độ N2</span>
+                </li>
+                <li class="col-sm-3 col-xs-6">
+                    <a href="#" target="_blank" class="text-uppercase text-center icon-square">N3</a>
+                    <span class="text-uppercase">Trình độ N3</span>
+                </li>
+                <li class="col-sm-3 col-xs-6">
+                    <a href="#" target="_blank" class="text-uppercase text-center icon-square">Mới biết</a>
+                    <span class="text-uppercase">Trình độ Mới biết</span>
+                </li>
+            </ul><!--End .level-->
+        </div><!--End .row-->
+    </div>
+    <div class="space clearfix"></div>
+    <div class="row">
+        <div class="ibox box-level shadow text-center">            
+            <div class="ibox-title">
+                <h5 class="text-uppercase text-left">Loại hình công việc</h5>
+            </div>
+            <ul class="list">
+                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Kho xưởng</a></li>
+                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Cơm hộp</a></li>
+                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Yamato</a></li>
+                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Mì lạnh</a></li>
+                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Pha chế</a></li>
+                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Làm bếp</a></li>
+                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Chuyển nhà</a></li>
+                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Combini</a></li>
+                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Dọn dẹp</a></li>
+                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Phát báo</a></li>                    
+                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Phiên dịch</a></li>                    
+                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">IT</a></li>                    
+            </ul>>
+        </div><!--End .row-->
+    </div>
+    <div class="space clearfix"></div>
+    <div class="row">
+        <div class="ibox shadow">
+            <div class="ibox-title">
+                <h5 class="text-uppercase">Việc làm mới</h5>
+            </div>
+            <div class="clearfix" id="job-new">                    
+                <div class="row row_dotted">
+                    <div class="col-sm-3 img-block">
+                        <img src="<?php echo get_template_directory_uri() ?>/img/baito1.jpg" alt="" />
+                    </div>                    
+                    <div class="col-sm-9 job-block">
+                        <a target="_blan" class="job-title">Kỹ Sư Cầu Nối (BrSE) Thành thạo Tiếng Nhật (cơ Hội Onsite Tại Nhật Từ 1~3 Năm)</a>
+                        <dl class="dl-horizontal clearfix basic-info">
+                            <dt>Tiền lương</dt>
+                            <dd>950￥/h～1,188￥/h</dd>
+                            <dt>Nơi làm việc</dt>
+                            <dd>千葉県市川市二俣新町22-1</dd>
+                            <dt>Ga gần nhất</dt>
+                            <dd>Ga Futamata Shinmachi( Đi bộ 1 phút). Ga Nishifunabashi (đi xe đạp mất 15 phút)</dd>
+                        </dl>
+                        <ul class="info list-inline">
+                            <li><span class="fa fa-calendar"></span> 25/03/2017</li>
+                            <li><i class="fa fa-eye"></i> Xem: 263 lượt</li>
+                        </ul>
+                        <a href="#" class="pull-right">Chi tiết <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                    </div>
                 </div>
-                <div class="ibox-content" id="results">
-                    <div id="blueimp-gallery" class="blueimp-gallery">
-                        <div class="slides"></div>
-                        <h3 class="title"></h3>
-                        <a class="prev">‹</a>
-                        <a class="next">›</a>
-                        <a class="close">×</a>
-                        <a class="play-pause"></a>
-                        <ol class="indicator"></ol>
-                    </div>                                        
-                    <div class="row row_dotted">
-
-                        <div class="col-sm-9 job-block red-bold">
-                            <a target="_blank" onclick="ga('send', 'event', 'job', 'click', 'newjobs')" href="http://japan.vietnamworks.com/job/777504-0114-hcm-tuyen-gap-ky-su-cau-noi-brse-thanh-thao-tieng-nhat-co-hoi-onsite-tai-nhat-tu-13-nam" class="job-title">[0114-HCM] (TUYỂN GẤP!!!) Kỹ Sư Cầu Nối (BrSE) Thành thạo Tiếng Nhật (cơ Hội Onsite Tại Nhật Từ 1~3 Năm)</a>
-
-                            <div class="info">
-                                <span class="date-info">
-                                    <span class="fa fa-calendar"></span>
-                                    25/03/2017            </span>
-
-                                <span class="place-info">
-                                    <span class="glyphicon glyphicon-globe"></span>
-                                    Hồ Chí Minh            </span>
-                                <br>
-
-                                <span class="salary">
-                                    Mức lương: <a href="http://japan.vietnamworks.com/login" target="_blank" title="Đăng nhập" class="log-in-salary">Đăng nhập để xem mức lương</a>
-                                </span>
-                                <br><span class="view-num"><i class="fa fa-eye"></i> Xem: 263 lượt</span>
-                            </div>
-                            <!-- image job-->
-
-                            <!-- skill -->
-                            <div class="skills">
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar  progress-small progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/japanese-n1-or-n2" title="Japanese ( N1 Or N2)">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">Japanese ( N1 Or N2)</em>
-                                    </a>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar progress-small progress-bar-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/developer" title="Developer">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">Developer</em>
-                                    </a>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar progress-small progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/bse" title="BSE">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">BSE</em>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- end skill -->
-
-
-
-
-                        </div>
-
-                        <div class="col-sm-3 name-block">Công Ty IT Lớn Của Nhật</div>
-
-                        <div class="col-sm-12 benefit benefit777504">
-
-                            <a> <i class="fa fa-gift"></i> &nbsp;Phúc lợi công ty <i class="small fa fa-chevron-down"></i> </a>
-
-                            <ul>
-                                <li>
-                                    <span class="fa fa-fw fa-dollar"></span>
-                                    &nbsp;Được tham gia lớp học tiếng Nhật dành cho nhân viên                    </li>
-                                <li>
-                                    <span class="fa fa-fw fa-user-md"></span>
-                                    &nbsp;Du lịch công ty mỗi năm 1 lần                    </li>
-                                <li>
-                                    <span class="fa fa-fw fa-file-image-o"></span>
-                                    &nbsp;Đăng ký bảo hiểm tai nạn 24/24 cho nhân viên                    </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="row row_dotted">
-
-                        <div class="col-sm-9 job-block red-bold">
-                            <a target="_blank" onclick="ga('send', 'event', 'job', 'click', 'newjobs')" href="http://japan.vietnamworks.com/job/777487-0114-hcm-tuyen-gap-project-manager-thanh-thao-tieng-nhat-luong-thoa-thuan" class="job-title">[0114-HCM] (TUYỂN GẤP!!!) Project Manager Thành thạo Tiếng Nhật (lương Thỏa Thuận)</a>
-
-
-
-
-                            <div class="info">
-                                <span class="date-info">
-                                    <span class="fa fa-calendar"></span>
-                                    25/03/2017            </span>
-
-                                <span class="place-info">
-                                    <span class="glyphicon glyphicon-globe"></span>
-                                    Hồ Chí Minh            </span>
-                                <br>
-
-                                <span class="salary">
-                                    Mức lương: Thỏa thuận            </span>
-                                <br><span class="view-num"><i class="fa fa-eye"></i> Xem: 162 lượt</span>
-                            </div>
-                            <!-- image job-->
-
-                            <!-- skill -->
-                            <div class="skills">
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar  progress-small progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/japanese-n1-or-n2" title="Japanese ( N1 Or N2)">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">Japanese ( N1 Or N2)</em>
-                                    </a>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar progress-small progress-bar-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/japanese-speaking-project-manager" title="Japanese Speaking Project Manager">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">Japanese Speaking Project Manager</em>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- end skill -->
-
-
-
-
-                        </div>
-
-                        <div class="col-sm-3 name-block">Công Ty IT Lớn Của Nhật</div>
-
-                        <div class="col-sm-12 benefit benefit777487">
-
-                            <a> <i class="fa fa-gift"></i> &nbsp;Phúc lợi công ty <i class="small fa fa-chevron-down"></i> </a>
-
-                            <ul>
-                                <li>
-                                    <span class="fa fa-fw fa-dollar"></span>
-                                    &nbsp;Được tham gia lớp học tiếng Nhật dành cho nhân viên                    </li>
-                                <li>
-                                    <span class="fa fa-fw fa-user-md"></span>
-                                    &nbsp;Du lịch công ty mỗi năm 1 lần                    </li>
-                                <li>
-                                    <span class="fa fa-fw fa-file-image-o"></span>
-                                    &nbsp;Đăng ký bảo hiểm tai nạn 24/24 cho nhân viên                    </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="row row_dotted">
-
-                        <div class="col-sm-9 job-block red-bold">
-                            <a target="_blank" onclick="ga('send', 'event', 'job', 'click', 'newjobs')" href="http://japan.vietnamworks.com/job/777448-system-engineer-programmer" class="job-title">System Engineer &amp; Programmer</a>
-
-
-
-
-                            <div class="info">
-                                <span class="date-info">
-                                    <span class="fa fa-calendar"></span>
-                                    25/03/2017            </span>
-
-                                <span class="place-info">
-                                    <span class="glyphicon glyphicon-globe"></span>
-                                    Hà Nội            </span>
-                                <br>
-
-                                <span class="salary">
-                                    Mức lương: Thỏa thuận            </span>
-                                <br><span class="view-num"><i class="fa fa-eye"></i> Xem: 263 lượt</span>
-                            </div>
-                            <!-- image job-->
-                            <div class="co-photos-block">
-                                <div class="lightBoxGallery" id="777448">
-
-                                    <a rel="group_777448" href="https://images.vietnamworks.com/company_profile/33928.jpg" title="" data-gallery="#blueimp-gallery-777448">
-                                        <img src="https://images.vietnamworks.com/company_profile/33928.jpg" class="first" width="114">
-                                    </a>
-
-                                    <a rel="group_777448" href="https://images.vietnamworks.com/company_profile/43043.jpg" title="" data-gallery="#blueimp-gallery-777448">
-                                        <img src="https://images.vietnamworks.com/company_profile/43043.jpg" width="114">
-                                    </a>
-
-                                    <a rel="group_777448" href="https://images.vietnamworks.com/company_profile/43044.jpg" title="" data-gallery="#blueimp-gallery-777448">
-                                        <img src="https://images.vietnamworks.com/company_profile/43044.jpg" width="114">
-                                    </a>
-
-                                    <a rel="group_777448" href="https://images.vietnamworks.com/company_profile/43056.jpg" title="" data-gallery="#blueimp-gallery-777448">
-                                        <img src="https://images.vietnamworks.com/company_profile/43056.jpg" width="114">
-                                    </a>
-                                </div>
-                            </div>
-
-                            <!-- skill -->
-                            <div class="skills">
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar  progress-small progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/database-sql" title="Database/ SQL">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">Database/ SQL</em>
-                                    </a>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar progress-small progress-bar-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/code-coding" title="Code / Coding">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">Code / Coding</em>
-                                    </a>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar progress-small progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/software-engineering" title="Software Engineering">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">Software Engineering</em>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- end skill -->
-
-
-
-
-                        </div>
-
-                        <div class="col-sm-3 name-block">MAT (vietnam) Co., Ltd.</div>
-
-                        <div class="col-sm-12 benefit benefit777448">
-
-                            <a> <i class="fa fa-gift"></i> &nbsp;Phúc lợi công ty <i class="small fa fa-chevron-down"></i> </a>
-
-                            <ul>
-                                <li>
-                                    <span class="fa fa-fw fa-dollar"></span>
-                                    &nbsp;Performance Bonus                    </li>
-                                <li>
-                                    <span class="fa fa-fw fa-user-md"></span>
-                                    &nbsp;Social and health insurance based on Vietnam Labour Law                    </li>
-                                <li>
-                                    <span class="fa fa-fw fa-graduation-cap"></span>
-                                    &nbsp;Oversea training opportunities                    </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="row row_dotted">
-
-                        <div class="col-sm-9 job-block red-bold">
-                            <a target="_blank" onclick="ga('send', 'event', 'job', 'click', 'newjobs')" href="http://japan.vietnamworks.com/job/774427-phien-dich-tieng-nhat" class="job-title">Phiên Dịch Tiếng Nhật</a>
-
-
-
-
-                            <div class="info">
-                                <span class="date-info">
-                                    <span class="fa fa-calendar"></span>
-                                    24/03/2017            </span>
-
-                                <span class="place-info">
-                                    <span class="glyphicon glyphicon-globe"></span>
-                                    Hà Nội            </span>
-                                <br>
-
-                                <span class="salary">
-                                    Mức lương: <a href="http://japan.vietnamworks.com/login" target="_blank" title="Đăng nhập" class="log-in-salary">Đăng nhập để xem mức lương</a>
-                                </span>
-                                <br><span class="view-num"><i class="fa fa-eye"></i> Xem: 600 lượt</span>
-                            </div>
-                            <!-- image job-->
-
-                            <!-- skill -->
-                            <div class="skills">
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar  progress-small progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/hành-chánh-thư-ký" title="Hành Chánh - Thư Ký">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">Hành Chánh - Thư Ký</em>
-                                    </a>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar progress-small progress-bar-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/dịch-thuật-thông-dịch-viên" title="Dịch Thuật/ Thông Dịch Viên">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">Dịch Thuật/ Thông Dịch Viên</em>
-                                    </a>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar progress-small progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/biên-phiên-dịch-tiếng-nhật" title="Biên Phiên Dịch Tiếng Nhật">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">Biên Phiên Dịch Tiếng Nhật</em>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- end skill -->
-
-
-
-
-                        </div>
-
-                        <div class="col-sm-3 name-block">Công Ty Cổ Phần Kiến Trúc Và Nội Thất HD Style</div>
-
-                        <div class="col-sm-12 benefit benefit774427">
-
-                            <a> <i class="fa fa-gift"></i> &nbsp;Phúc lợi công ty <i class="small fa fa-chevron-down"></i> </a>
-
-                            <ul>
-                                <li>
-                                    <span class="fa fa-fw fa-dollar"></span>
-                                    &nbsp;Được hưởng mức lương hấp dẫn, phù hợp với năng lực và các chế độ phúc lợi mở rộng khác                    </li>
-                                <li>
-                                    <span class="fa fa-fw fa-user-md"></span>
-                                    &nbsp;Hưởng các chế độ đãi ngộ theo luật lao động như: BHXH, BHYT, BHTN …                    </li>
-                                <li>
-                                    <span class="fa fa-fw fa-check-square-o"></span>
-                                    &nbsp;Được làm việc trong môi trường năng động, chuyên nghiệp.                    </li>
-                            </ul>
-                        </div>
-
-                    </div>
-
-                    <div class="row row_dotted">
-
-                        <div class="col-sm-9 job-block red-bold">
-                            <a target="_blank" onclick="ga('send', 'event', 'job', 'click', 'newjobs')" href="http://japan.vietnamworks.com/job/777917-★☆★-nhan-vien-hanh-chinh-nhan-su-tong-hop" class="job-title">★☆★ Nhân Viên Hành Chính Nhân Sự Tổng Hợp</a>
-
-
-
-
-                            <div class="info">
-                                <span class="date-info">
-                                    <span class="fa fa-calendar"></span>
-                                    24/03/2017            </span>
-
-                                <span class="place-info">
-                                    <span class="glyphicon glyphicon-globe"></span>
-                                    Hồ Chí Minh            </span>
-                                <br>
-
-                                <span class="salary">
-                                    Mức lương: <a href="http://japan.vietnamworks.com/login" target="_blank" title="Đăng nhập" class="log-in-salary">Đăng nhập để xem mức lương</a>
-                                </span>
-                                <br><span class="view-num"><i class="fa fa-eye"></i> Xem: 2876 lượt</span>
-                            </div>
-                            <!-- image job-->
-
-                            <!-- skill -->
-                            <div class="skills">
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar  progress-small progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/admin" title="Admin">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">Admin</em>
-                                    </a>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar progress-small progress-bar-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/nhân-sự" title="Nhân Sự">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">Nhân Sự</em>
-                                    </a>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-2 col-xs-2">
-                                        <div class="progress progress-xxs">
-
-
-                                            <div class="progress-bar progress-small progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">&nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <a class="skill" href="http://japan.vietnamworks.com/kw/hành-chính" title="Hành Chính">
-                                        <em class="text-xs gray col-sm-10 col-xs-10 text-clip">Hành Chính</em>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- end skill -->
-
-
-
-
-                        </div>
-
-                        <div class="col-sm-3 name-block">Công Ty TNHH Yamato Logistics Việt Nam</div>
-
-                        <div class="col-sm-12 benefit benefit777917">
-
-                            <a> <i class="fa fa-gift"></i> &nbsp;Phúc lợi công ty <i class="small fa fa-chevron-down"></i> </a>
-
-                            <ul>
-                                <li>
-                                    <span class="fa fa-fw fa-dollar"></span>
-                                    &nbsp;Thu nhập hấp dẫn, được xét tăng lương, thưởng theo năng lực                    </li>
-                                <li>
-                                    <span class="fa fa-fw fa-user-md"></span>
-                                    &nbsp;Được hưởng chế độ bảo hiểm xã hội, bảo hiểm y tế, bảo hiểm thất nghiệp theo luật định                    </li>
-                                <li>
-                                    <span class="fa fa-fw fa-graduation-cap"></span>
-                                    &nbsp;Có cơ hội được đào tạo, phát triển sự nghiệp trong môi trường chuyên nghiệp của Nhật Bản                    </li>
-                            </ul>
-                        </div>
-
+                <div class="row row_dotted">
+                    <div class="col-sm-3 img-block">
+                        <img src="<?php echo get_template_directory_uri() ?>/img/baito4.jpg" alt="" />
+                    </div>                    
+                    <div class="col-sm-9 job-block">
+                        <a target="_blan" class="job-title">Kyoudousangyou Kabushikigaisha【Dọn giường】</a>
+                        <dl class="dl-horizontal clearfix basic-info">
+                            <dt>Tiền lương</dt>
+                            <dd>Lương theo giờ từ 1050 yên trở lên</dd>
+                            <dt>Nơi làm việc</dt>
+                            <dd>つけめんGACHI</dd>
+                            <dt>Ga gần nhất</dt>
+                            <dd>[Tuyến Tokyo Metro, ga Shinjuku Sanchoume] Đi bộ 3 phút từ cửa ra C7</dd>
+                        </dl>
+                        <ul class="info list-inline clearfix">
+                            <li><span class="fa fa-calendar"></span> 25/03/2017</li>
+                            <li><i class="fa fa-eye"></i> Xem: 263 lượt</li>
+                        </ul>
+                        <a href="#" class="pull-right">Chi tiết <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                     </div>                    
                 </div>
-                <div class="row">
-                    <span>
-                        <a href="http://japan.vietnamworks.com/japan/type/?date=last3days" target="_blank" class="view-more">Xem tất cả việc làm mới <i class="fa fa-angle-double-right"></i></a>
-                    </span>
+                <div class="row row_dotted">
+                    <div class="col-sm-3 img-block">
+                        <img src="<?php echo get_template_directory_uri() ?>/img/baito6.jpg" alt="" />
+                    </div>                    
+                    <div class="col-sm-9 job-block">
+                        <a target="_blan" class="job-title">Công việc làm tại quán mỳ Ramen</a>
+                        <dl class="dl-horizontal clearfix basic-info">
+                            <dt>Tiền lương</dt>
+                            <dd>￥883</dd>
+                            <dt>Nơi làm việc</dt>
+                            <dd>Hotel the Lutheran</dd>
+                            <dt>Ga gần nhất</dt>
+                            <dd>Ga Tanimachi4choume Đi bộ 2 phút</dd>
+                        </dl>
+                        <ul class="info list-inline">
+                            <li><span class="fa fa-calendar"></span> 25/03/2017</li>
+                            <li><i class="fa fa-eye"></i> Xem: 263 lượt</li>
+                        </ul>
+                        <a href="#" class="disabled pull-right">Chi tiết <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                    </div>                    
                 </div>
-            </div>
-        </div>
+                <div class="row row_dotted">
+                    <div class="col-sm-3 img-block">
+                        <img src="<?php echo get_template_directory_uri() ?>/img/baito3.jpg" alt="" />
+                    </div>                    
+                    <div class="col-sm-9 job-block">
+                        <a target="_blan" class="job-title">Thông phiên dịch cho kỹ sư người Nhật – Việt</a>
+                        <dl class="dl-horizontal clearfix basic-info">
+                            <dt>Tiền lương</dt>
+                            <dd>1000円～</dd>
+                            <dt>Nơi làm việc</dt>
+                            <dd>杉並区荻窪5-15-22　HOLD荻窪ビル3階</dd>
+                            <dt>Ga gần nhất</dt>
+                            <dd>JR Chuo Line ga Ogikubo Đi bộ 5 phút</dd>
+                        </dl>
+                        <ul class="info list-inline">
+                            <li><span class="fa fa-calendar"></span> 25/03/2017</li>
+                            <li><i class="fa fa-eye"></i> Xem: 263 lượt</li>
+                        </ul>
+                        <a href="#" class="pull-right">Chi tiết <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+
+            </div>                
+        </div><!--End .ibox-->
+        <div class="clearfix"></div>
+        <p class="text-right">
+            <a href="#" target="_blank" class="view-more">Xem tất cả công việc <i class="fa fa-angle-double-right"></i></a>
+        </p>
         <!-- Right column -->
     </div>
 </div><!--End .container-->
 <section class="bg-gray">
     <div class="container">
-        <?php
-        global $jobman_shortcode_jobs, $jobman_shortcode_all_jobs, $jobman_shortcode_category, $jobman_shortcodes, $jobman_field_shortcodes, $wp_query;
-        $options = get_option('jobman_options');
-
-        $content = '';
-
-        $page = get_post($options['main_page']);
-
-        if ('all' != $cat) {
-            $page->ID = -1;
-            $page->post_type = 'jobman_joblist';
-            $page->post_title = __('Jobs Listing', 'jobman');
-        }
-
-        if ('all' != $cat) {
-            $jobman_shortcode_category = $category = get_term($cat, 'jobman_category');
-            if (NULL == $category) {
-                $cat = 'all';
-            } else {
-                $page->post_title = $category->name;
-                $page->post_parent = $options['main_page'];
-                $page->post_name = $category->slug;
-            }
-        }
-
-        $args = array(
-            'post_type' => 'jobman_job',
-            'suppress_filters' => false
-        );
-
-        if (!empty($options['sort_by'])) {
-            switch ($options['sort_by']) {
-                case 'title':
-                    $args['orderby'] = 'title';
-                    break;
-                case 'dateposted':
-                    $args['orderby'] = 'date';
-                    break;
-                case 'closingdate':
-                    $args['orderby'] = 'meta_value';
-                    $args['meta_key'] = 'displayenddate';
-                    break;
-                default:
-                    $args['orderby'] = 'meta_value';
-                    $args['meta_key'] = $options['sort_by'];
-                    break;
-            }
-        }
-
-        if ($options['jobs_per_page'] > 0) {
-            $args['numberposts'] = $options['jobs_per_page'];
-            $args['posts_per_page'] = $options['jobs_per_page'];
-
-            if (array_key_exists('page', $wp_query->query_vars) && $wp_query->query_vars['page'] > 1)
-                $args['offset'] = ( $wp_query->query_vars['page'] - 1 ) * $options['jobs_per_page'];
-        }
-        else {
-            $args['numberposts'] = -1;
-        }
-
-        if (in_array($options['sort_order'], array('asc', 'desc')))
-            $args['order'] = $options['sort_order'];
-        else
-            $args['order'] = 'asc';
-
-        if ('all' != $cat)
-            $args['jcat'] = $category->slug;
-
-        add_filter('posts_where', 'jobman_job_live_where');
-        add_filter('posts_join', 'jobman_job_live_join');
-        add_filter('posts_distinct', 'jobman_job_live_distinct');
-
-        $jobs = get_posts($args);
-
-        $related_cats = array();
-        foreach ($jobs as $id => $job) {
-            // Get related categories
-            if ($options['related_categories']) {
-                $categories = wp_get_object_terms($job->ID, 'jobman_category');
-                if (count($categories) > 0) {
-                    foreach ($categories as $cat) {
-                        $related_cats[] = $cat->slug;
-                    }
-                }
-            }
-        }
-        $related_cats = array_unique($related_cats);
-        ?>
-        <ul class="row list-cate list-unstyled text-small clearfix">
-            <?php
-            if ($options['related_categories'] && count($related_cats) > 0) {
-                $links = array();
-                foreach ($related_cats as $rc) {
-                    $cat = get_term_by('slug', $rc, 'jobman_category');
-                    ?>
-                    <li class="col-sm-6 col-md-4">
-                        <div class="tag gpjs-open-link">
-                            <span class="tag-object default-icon default-icon-dashboard-full"></span>
-                            <div class="tag-body">
-                                <h4 class="tag-heading"><a href="<?php echo get_term_link($cat->slug, 'jobman_category') ?>" title="<?php echo $cat->name ?>"><?php echo $cat->name ?></a></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <?php
-                }
-            }
-            ?>            
-        </ul>
-    </div>
-</section><!--End .bg-gray-->
-<section class="bgwhite">
-    <div class="container wrapper-lg">        
         <div class="row">
-            <section class="col-md-8">                
-                <h3 class="text-uppercase text-gray">Loại hình công việc</h3>
-                <ul class="list list-divided">
-                    <li><a class="text-color" href="#">Kho xưởng</a></li>
-                    <li><a class="text-color" href="#">Cơm hộp</a></li>
-                    <li><a class="text-color" href="#">Yamato</a></li>
-                    <li><a class="text-color" href="#">Mì lạnh</a></li>
-                    <li><a class="text-color" href="#">Pha chế</a></li>
-                    <li><a class="text-color" href="#">Làm bếp</a></li>
-                    <li><a class="text-color" href="#">Chuyển nhà</a></li>
-                    <li><a class="text-color" href="#">Combini</a></li>
-                    <li><a class="text-color" href="#">Dọn dẹp</a></li>
-                    <li><a class="text-color" href="#">Phát báo</a></li>                    
-                </ul>
-            </section>
-            <aside class="col-md-4 pull-right-md">
-
-                <div class="widget">
-                    <div id="register" class="clearfix">
-                        <div class="widget-header">
-                            <big><a href="<?php echo get_bloginfo('url') ?>/dang-ky-ung-vien/" title="">Đăng ký ứng viên</a></big> <small><a href="<?php echo get_bloginfo('url') ?>/dang-nhap/">hoặc đăng nhập</a></small>
-                        </div>
-                        <div class="widget-body">
-                            <p>Hoàn toàn miễn phí! Có tiền mừng tuyển dụng!</p>
-                        </div>
-                    </div><!--End #register-->
-                    <div id="find-us-facebook" class="clearfix">
-                        <div class="widget-header">
-                            <h3 class="widget-heading">Find us on Facebook</h3>
-                        </div>
-                        <div class="widget-body">
-                            <p><div class="fb-page" data-href="https://www.facebook.com/scfvietnam" data-small-header="true" 
-                                    data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                                <blockquote cite="https://www.facebook.com/scfvietnam" class="fb-xfbml-parse-ignore">
-                                    <a href="https://www.facebook.com/scfvietnam">SCF VietNam - Trung tâm hỗ trợ người Việt Nam tại Nhật Bản</a></blockquote></div></p>
-                        </div>                    
-                    </div><!--End #find-us-facebook-->
-                </div>                                
-            </aside>            
-        </div>
-    </div>
-</section><!--End .bgwhite-->
-
-<section class="section">	
-    <div class="container">
-        <div class="row text-center">
-            <h3 class="section-title pull-left"><i class="fa fa-arrows" aria-hidden="true"></i> Contact</h3>
-            <h2 class="h1 text-center">Liên hệ</h2>
-            <p class="text-large text-gray-light">Để biết thông tin chi tiết、<br class="hidden-xs">hãy liên hệ bằng điện thoại hoặc form liên hệ dưới đây.</p>
-            <p class="phone-number h1 mb-10"><i class="fa fa-phone" aria-hidden="true"></i><br /><a href="tel:08037352142"><span class="h2">080-3735-2142</span></a><br />
+            <h3 class="top-title text-uppercase text-center">Blog</h3>
+            <div class="col-sm-4">
+                <div class="ibox shadow">
+                    <div class="ibox-content blog-content item">
+                        <a href="#">
+                            <img src="http://japan.vietnamworks.com/uploads-image/bUHxDH7Bshutterstock_272455511.jpg" alt="article" class="img-responsive">
+                        </a>
+                        <a href="#">
+                            <h2>Mẹo Outlook giúp giải quyết các công việc hàng ngày nhanh hơn</h2>
+                        </a>
+                        <ul class="small list-inline">
+                            <li><span class="text-muted"><i class="fa fa-clock-o"></i> 30-03-2017</span></li>
+                            <li><span class="text-muted"><i class="fa fa-clock-o"></i> Mẹo văn phòng</span></li>                            
+                        </ul>
+                        <p>Microsoft Outlook phức tạp quá à! Hôm nay mình chỉ bạn các phím tắt hay, cách giải quyết khi mail đầy, lấy lại mail khi lỡ chọn gửi, và nhiều ...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox shadow">
+                    <div class="ibox-content blog-content">
+                        <a href="http://japan.vietnamworks.com/tips/detail/113">
+                            <img src="http://japan.vietnamworks.com/uploads-image/J9Iqld7Yn-grads-a-20150120-870x579-2416-1422416453.jpg" alt="article" class="img-responsive">
+                        </a>
+                        <a href="#">
+                            <h2>Các hãng lớn Nhật đi khắp châu Á “đánh bắt” nhân tài</h2>
+                        </a>
+                        <ul class="small list-inline">
+                            <li><span class="text-muted"><i class="fa fa-clock-o"></i> 30-03-2017</span></li>
+                            <li><span class="text-muted"><i class="fa fa-clock-o"></i> Hoc tieng Nhat</span></li>                            
+                        </ul>
+                        <p>
+                            Dân số trẻ ở Nhật Bản đang giảm dần, để tìm nguồn nhân lực cho tương lai, các công ty Nhật Bản đang chuyển hướng sang tuyển dụng sinh viên ...                    </p>                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox shadow">
+                    <div class="ibox-content blog-content">                        
+                        <a href="http://japan.vietnamworks.com/tips/detail/112">
+                            <img src="http://japan.vietnamworks.com/uploads-image/PbdrpiF0kyary-japanese-flag-615-415x260.jpg" alt="article" class="img-responsive">
+                        </a>
+                        <a href="#">
+                            <h2>Một số câu tục ngữ, ca dao Nhật Bản</h2>
+                        </a>
+                        <ul class="small list-inline">
+                            <li><span class="text-muted"><i class="fa fa-clock-o"></i> 30-03-2017</span></li>
+                            <li><span class="text-muted"><i class="fa fa-clock-o"></i> Văn hoá Nhật Bản</span></li>                            
+                        </ul>
+                        <p>
+                            Hãy cùng học một số câu ca dao, tục ngữ Nhật Bản, bạn sẽ thấy văn hóa Nhật Bản cũng có nhiều điểm tương đồng so với văn hóa Việt ...                    </p>                        
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <p class="text-right">
+                <a href="#" target="_blank" class="view-more">Xem tất cả bài viết <i class="fa fa-angle-double-right"></i></a>
             </p>
-            <small>営業時間<br class="visible-xs">月〜金 9:00-18:00<br>(祝日は営業しておりません)</small>
-            <p class="btn-block-sm mb-50 center-block"><a class="btn btn-primary" href="#" title="お問い合わせ">お問い合わせ</a></p>
         </div>
-    </div>
-</section>
+    </div><!--End .container-->
+</section><!--End .bg-gray-->
+
 <?php
 get_footer();
 

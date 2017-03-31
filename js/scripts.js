@@ -36,7 +36,7 @@ jQuery(document).ready(function ($) {
         captions: false,
         pager: false
     });
-    
+
     var isSearchHover = false;
     $(document).click(function () {
         if (!isSearchHover)
@@ -53,5 +53,14 @@ jQuery(document).ready(function ($) {
         isSearchHover = true;
     }).on('mouseleave', '#search-icon, #search-icon-desk', function () {
         isSearchHover = false;
+    });
+    //Chosen
+    $("#cateList").chosen({
+        placeholder_text_multiple: "Chọn ngành nghề",
+        max_selected_options: 3
+    });
+    $("#listPlace").chosen({
+        placeholder_text_multiple: "Chọn địa điểm",
+        max_selected_options: 3
     });
 });

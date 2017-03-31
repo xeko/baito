@@ -27,8 +27,7 @@
           js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.7&appId=1573219376289456";
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
-        <div id="back-to-top"><i class="fa fa-arrow-circle-up"></i></div>
-        
+        <div id="back-to-top"><i class="fa fa-angle-up" aria-hidden="true"></i><br>PAGE<br>TOP</div>
         <nav role="navigation" class="navbar">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
