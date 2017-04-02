@@ -176,6 +176,7 @@ nav#navigation {
     text-decoration: none;
     border: none;
     color: #0A2F6D;
+    background: transparent;
 }
 #main-menu a:before {
     content: "";

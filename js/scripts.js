@@ -59,8 +59,9 @@ jQuery(document).ready(function ($) {
         placeholder_text_multiple: "Chọn ngành nghề",
         max_selected_options: 3
     });
-    $("#listPlace").chosen({
+    $("#location").chosen({
         placeholder_text_multiple: "Chọn địa điểm",
-        max_selected_options: 3
     });
+    
+    $('.item').matchHeight();
 });

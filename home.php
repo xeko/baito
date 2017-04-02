@@ -34,11 +34,12 @@
                 <h5 class="text-uppercase">TÌM VIỆC LÀM PHÙ HỢP</h5>
             </div>
             <div class="ibox-content">
-                <form name="search" id="frm_block_quick_search" action="" method="post">
+                <form name="search" id="frm_block_quick_search" action="<?php echo esc_url( home_url( '/' ) );?>" method="get">
+                    <input type="hidden" name="post_type" value="cv_job" />
                     <div class="row">
                         <div class="col-sm-9">
                             <div class="mb10 col-sm-12">
-                                <input id="keywordMainSearch" class="form-control search-all" name="job_title" placeholder="">
+                                <input id="keyword" class="form-control search-all" name="s" placeholder="" >
                             </div>
                             <div class="mb10 col-sm-6">
                                 <select data-placeholder="japanese level" class="form-control" id="japaneseLevelMainSearch" name="jp_level" tabindex="-1">
@@ -59,69 +60,46 @@
                                 </div>
                             </div>
                             <div class="mb10 col-sm-6">
-                                <select multiple="true" class="chosen-select form-control" id="cateList" name="job_category[]">
-                                    <option value="1">Cửa hàng ăn uống</option>
-                                    <option value="2">Kho hàng, công xưởng</option>
-                                    <option value="3">Phân loại hàng hoá</option>
-                                    <option value="4">Văn phòng</option>
-                                    <option value="5">Khách sạn</option>
-                                    <option value="6">Phát tờ rơi</option>
-                                    <option value="7">Chế biến thực phẩm</option>
-                                    <option value="8">Nhân viên nhà bếp</option>
-                                    <option value="9">Quán nhậu</option>
-                                    <option value="10">Giao hàng, vận chuyển đồ đạc</option>
-                                </select>                                
+                                <?php
+                                $terms = get_terms('job_category', array('hide_empty' => 0));
+                                echo '<select multiple="true" id="cateList" class="chosen-select form-control" name="job_category[]">';
+                                foreach ($terms as $term) {
+                                    if ($term->parent == 0) {
+                                        if ($i++ != 0)
+                                            echo '</optgroup>';
+                                        echo '<optgroup label="' . $term->name . '">';
+                                        $id = $term->term_id;
+                                        $args = array("child_of" => $id, 'hide_empty' => 0);
+                                        $this_term = get_terms('job_category', $args);
+                                        foreach ($this_term as $the_term) {
+                                            $term_name = str_replace($term->name, '', $the_term->name);
+                                            echo '<option value="' . $the_term->term_id . '">' . $the_term->name . '</option>';
+                                        }
+                                    }
+                                }
+                                echo '</select>';
+                                ?>                                                        
                             </div>
-                            <div class="mb10 col-sm-6">                                
-                                <select name="place_category[]" multiple="true" class="chosen-select form-control" id="listPlace">
-                                    <option value="01" class="dropdown-select address01 option" id="sel_pref_code-1">北海道(Hokkaido)</option>
-                                    <option value="02" class="dropdown-select address01 option" id="sel_pref_code-2">青森県(Aomori)</option>
-                                    <option value="03" class="dropdown-select address01 option" id="sel_pref_code-3">岩手県(Iwate)</option>
-                                    <option value="04" class="dropdown-select address01 option" id="sel_pref_code-4">宮城県(Miyagi)</option>
-                                    <option value="05" class="dropdown-select address01 option" id="sel_pref_code-5">秋田県(Akita)</option>
-                                    <option value="06" class="dropdown-select address01 option" id="sel_pref_code-6">山形県(Yamagata)</option>
-                                    <option value="07" class="dropdown-select address01 option" id="sel_pref_code-7">福島県(Fukushima)</option>
-                                    <option value="08" class="dropdown-select address01 option" id="sel_pref_code-8">茨城県(Ibaraki)</option>
-                                    <option value="09" class="dropdown-select address01 option" id="sel_pref_code-9">栃木県(Tochigi)</option>
-                                    <option value="10" class="dropdown-select address01 option" id="sel_pref_code-10">群馬県(Gunma)</option>
-                                    <option value="11" class="dropdown-select address01 option" id="sel_pref_code-11">埼玉県(Saitama)</option>
-                                    <option value="12" class="dropdown-select address01 option" id="sel_pref_code-12">千葉県(Chiba)</option>
-                                    <option value="13" class="dropdown-select address01 option" id="sel_pref_code-13">東京都(Tokyo)</option>
-                                    <option value="14" class="dropdown-select address01 option" id="sel_pref_code-14">神奈川県(Kanagawa)</option>
-                                    <option value="15" class="dropdown-select address01 option" id="sel_pref_code-15">新潟県(Niigata)</option>
-                                    <option value="16" class="dropdown-select address01 option" id="sel_pref_code-16">富山県(Toyama)</option>
-                                    <option value="17" class="dropdown-select address01 option" id="sel_pref_code-17">石川県(Ishikawa)</option>
-                                    <option value="18" class="dropdown-select address01 option" id="sel_pref_code-18">福井県(Fukui)</option>
-                                    <option value="19" class="dropdown-select address01 option" id="sel_pref_code-19">山梨県(Yamanashi)</option>
-                                    <option value="20" class="dropdown-select address01 option" id="sel_pref_code-20">長野県(Nagano)</option>
-                                    <option value="21" class="dropdown-select address01 option" id="sel_pref_code-21">岐阜県(Gifu)</option>
-                                    <option value="22" class="dropdown-select address01 option" id="sel_pref_code-22">静岡県(Shizuoka)</option>
-                                    <option value="23" class="dropdown-select address01 option" id="sel_pref_code-23">愛知県(Aichi)</option>
-                                    <option value="24" class="dropdown-select address01 option" id="sel_pref_code-24">三重県(Mie)</option>
-                                    <option value="25" class="dropdown-select address01 option" id="sel_pref_code-25">滋賀県(Shiga)</option>
-                                    <option value="26" class="dropdown-select address01 option" id="sel_pref_code-26">京都府(Kyoto)</option>
-                                    <option value="27" class="dropdown-select address01 option" id="sel_pref_code-27">大阪府(Osaka)</option>
-                                    <option value="28" class="dropdown-select address01 option" id="sel_pref_code-28">兵庫県(Hyogo)</option>
-                                    <option value="29" class="dropdown-select address01 option" id="sel_pref_code-29">奈良県(Nara)</option>
-                                    <option value="30" class="dropdown-select address01 option" id="sel_pref_code-30">和歌山県(Wakayama)</option>
-                                    <option value="31" class="dropdown-select address01 option" id="sel_pref_code-31">鳥取県(Tottori)</option>
-                                    <option value="32" class="dropdown-select address01 option" id="sel_pref_code-32">島根県(Shimane)</option>
-                                    <option value="33" class="dropdown-select address01 option" id="sel_pref_code-33">岡山県(Okayama)</option>
-                                    <option value="34" class="dropdown-select address01 option" id="sel_pref_code-34">広島県(Hiroshima)</option>
-                                    <option value="35" class="dropdown-select address01 option" id="sel_pref_code-35">山口県(Yamaguchi)</option>
-                                    <option value="36" class="dropdown-select address01 option" id="sel_pref_code-36">徳島県(Tokushima)</option>
-                                    <option value="37" class="dropdown-select address01 option" id="sel_pref_code-37">香川県(Kagawa)</option>
-                                    <option value="38" class="dropdown-select address01 option" id="sel_pref_code-38">愛媛県(Ehime)</option>
-                                    <option value="39" class="dropdown-select address01 option" id="sel_pref_code-39">高知県(Kochi)</option>
-                                    <option value="40" class="dropdown-select address01 option" id="sel_pref_code-40">福岡県(Fukuoka)</option>
-                                    <option value="41" class="dropdown-select address01 option" id="sel_pref_code-41">佐賀県(Saga)</option>
-                                    <option value="42" class="dropdown-select address01 option" id="sel_pref_code-42">長崎県(Nagasaki)</option>
-                                    <option value="43" class="dropdown-select address01 option" id="sel_pref_code-43">熊本県(Kumamoto)</option>
-                                    <option value="44" class="dropdown-select address01 option" id="sel_pref_code-44">大分県(Oita)</option>
-                                    <option value="45" class="dropdown-select address01 option" id="sel_pref_code-45">宮崎県(Miyazaki)</option>
-                                    <option value="46" class="dropdown-select address01 option" id="sel_pref_code-46">鹿児島県(Kagoshima)</option>
-                                    <option value="47" class="dropdown-select address01 option" id="sel_pref_code-47">沖縄県(Okinawa)</option>
-                                </select>
+                            <div class="mb10 col-sm-6">
+                                <?php
+                                $job_category = get_terms('job_location', array('hide_empty' => 0));
+                                echo '<select multiple="true" id="location" class="chosen-select form-control" name="job_location[]">';
+                                foreach ($job_category as $term) {
+                                    if ($term->parent == 0) {
+//                                        if ($i++ != 0)
+                                            echo '</optgroup>';
+                                        echo '<optgroup label="' . $term->name . '">';
+                                        $id = $term->term_id;
+                                        $args = array("child_of" => $id, 'hide_empty' => 0);
+                                        $this_term = get_terms('job_location', $args);
+                                        foreach ($this_term as $the_term) {
+                                            $term_name = str_replace($term->name, '', $the_term->name);
+                                            echo '<option value="' . $the_term->term_id . '">' . $the_term->name . '</option>';
+                                        }
+                                    }
+                                }
+                                echo '</select>';
+                                ?>
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -186,93 +164,49 @@
             <div class="ibox-title">
                 <h5 class="text-uppercase">Việc làm mới</h5>
             </div>
-            <div class="clearfix" id="job-new">                    
-                <div class="row row_dotted">
-                    <div class="col-sm-3 img-block">
-                        <img src="<?php echo get_template_directory_uri() ?>/img/baito1.jpg" alt="" />
-                    </div>                    
-                    <div class="col-sm-9 job-block">
-                        <a target="_blan" class="job-title">Kỹ Sư Cầu Nối (BrSE) Thành thạo Tiếng Nhật (cơ Hội Onsite Tại Nhật Từ 1~3 Năm)</a>
-                        <dl class="dl-horizontal clearfix basic-info">
-                            <dt>Tiền lương</dt>
-                            <dd>950￥/h～1,188￥/h</dd>
-                            <dt>Nơi làm việc</dt>
-                            <dd>千葉県市川市二俣新町22-1</dd>
-                            <dt>Ga gần nhất</dt>
-                            <dd>Ga Futamata Shinmachi( Đi bộ 1 phút). Ga Nishifunabashi (đi xe đạp mất 15 phút)</dd>
-                        </dl>
-                        <ul class="info list-inline">
-                            <li><span class="fa fa-calendar"></span> 25/03/2017</li>
-                            <li><i class="fa fa-eye"></i> Xem: 263 lượt</li>
-                        </ul>
-                        <a href="#" class="pull-right">Chi tiết <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-                <div class="row row_dotted">
-                    <div class="col-sm-3 img-block">
-                        <img src="<?php echo get_template_directory_uri() ?>/img/baito4.jpg" alt="" />
-                    </div>                    
-                    <div class="col-sm-9 job-block">
-                        <a target="_blan" class="job-title">Kyoudousangyou Kabushikigaisha【Dọn giường】</a>
-                        <dl class="dl-horizontal clearfix basic-info">
-                            <dt>Tiền lương</dt>
-                            <dd>Lương theo giờ từ 1050 yên trở lên</dd>
-                            <dt>Nơi làm việc</dt>
-                            <dd>つけめんGACHI</dd>
-                            <dt>Ga gần nhất</dt>
-                            <dd>[Tuyến Tokyo Metro, ga Shinjuku Sanchoume] Đi bộ 3 phút từ cửa ra C7</dd>
-                        </dl>
-                        <ul class="info list-inline clearfix">
-                            <li><span class="fa fa-calendar"></span> 25/03/2017</li>
-                            <li><i class="fa fa-eye"></i> Xem: 263 lượt</li>
-                        </ul>
-                        <a href="#" class="pull-right">Chi tiết <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-                    </div>                    
-                </div>
-                <div class="row row_dotted">
-                    <div class="col-sm-3 img-block">
-                        <img src="<?php echo get_template_directory_uri() ?>/img/baito6.jpg" alt="" />
-                    </div>                    
-                    <div class="col-sm-9 job-block">
-                        <a target="_blan" class="job-title">Công việc làm tại quán mỳ Ramen</a>
-                        <dl class="dl-horizontal clearfix basic-info">
-                            <dt>Tiền lương</dt>
-                            <dd>￥883</dd>
-                            <dt>Nơi làm việc</dt>
-                            <dd>Hotel the Lutheran</dd>
-                            <dt>Ga gần nhất</dt>
-                            <dd>Ga Tanimachi4choume Đi bộ 2 phút</dd>
-                        </dl>
-                        <ul class="info list-inline">
-                            <li><span class="fa fa-calendar"></span> 25/03/2017</li>
-                            <li><i class="fa fa-eye"></i> Xem: 263 lượt</li>
-                        </ul>
-                        <a href="#" class="disabled pull-right">Chi tiết <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-                    </div>                    
-                </div>
-                <div class="row row_dotted">
-                    <div class="col-sm-3 img-block">
-                        <img src="<?php echo get_template_directory_uri() ?>/img/baito3.jpg" alt="" />
-                    </div>                    
-                    <div class="col-sm-9 job-block">
-                        <a target="_blan" class="job-title">Thông phiên dịch cho kỹ sư người Nhật – Việt</a>
-                        <dl class="dl-horizontal clearfix basic-info">
-                            <dt>Tiền lương</dt>
-                            <dd>1000円～</dd>
-                            <dt>Nơi làm việc</dt>
-                            <dd>杉並区荻窪5-15-22　HOLD荻窪ビル3階</dd>
-                            <dt>Ga gần nhất</dt>
-                            <dd>JR Chuo Line ga Ogikubo Đi bộ 5 phút</dd>
-                        </dl>
-                        <ul class="info list-inline">
-                            <li><span class="fa fa-calendar"></span> 25/03/2017</li>
-                            <li><i class="fa fa-eye"></i> Xem: 263 lượt</li>
-                        </ul>
-                        <a href="#" class="pull-right">Chi tiết <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-
-            </div>                
+            <div class="clearfix" id="job-new">
+                <?php
+                $job_args = array(
+                    'posts_per_page' => 4,
+                    'post_type' => 'cv_job',
+                    'post_status' => 'publish'
+                );
+                $job_query = new WP_Query($job_args);
+                if ($job_query->have_posts()) :
+                    while ($job_query->have_posts()) : $job_query->the_post();
+                        $map = get_post_meta(get_the_ID(), '_map', true);
+                        ?>
+                        <div class="row row_dotted">
+                            <div class="col-sm-3 img-block">
+                                <a href="<?php the_permalink() ?>">
+                                    <?php
+                                    echo wp_get_attachment_image(get_post_meta(get_the_ID(), '_cover_image', true), 'full', '', array('class' => 'img-responsive'));
+                                    ?>
+                                </a>
+                            </div>                    
+                            <div class="col-sm-9 job-block">
+                                <a href="<?php the_permalink() ?>" class="job-title"><?php echo cut_title(get_the_title(), 100) ?></a>
+                                <dl class="dl-horizontal clearfix basic-info">
+                                    <dt>Tiền lương</dt>
+                                    <dd><?php echo get_post_meta(get_the_ID(), '_salary', true); ?></dd>
+                                    <dt>Nơi làm việc</dt>
+                                    <dd><?php echo get_post_meta(get_the_ID(), '_location', true); ?><?php if (!empty($map)): ?> <span class="label label-danger"><a href="<?php echo $map ?>">bản đồ</a></span><?php endif ?></dd>
+                                    <dt>Thời gian làm việc</dt>
+                                    <dd><?php echo get_post_meta(get_the_ID(), '_time', true); ?></dd>
+                                </dl>
+                                <ul class="info list-inline">
+                                    <li><span class="fa fa-calendar"></span> Ngày đăng: <?php the_time('d/m/Y'); ?></li>
+                                    <li><i class="fa fa-eye"></i> Xem: 263 lượt</li>
+                                </ul>
+                                <a href="<?php the_permalink() ?>" class="pull-right">Chi tiết <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <?php
+                    endwhile;
+                endif;
+                wp_reset_postdata();
+                ?>            
+            </div><!--End #job-new-->
         </div><!--End .ibox-->
         <div class="clearfix"></div>
         <p class="text-right">
@@ -304,7 +238,7 @@
             </div>
             <div class="col-sm-4">
                 <div class="ibox shadow">
-                    <div class="ibox-content blog-content">
+                    <div class="ibox-content blog-content item">
                         <a href="http://japan.vietnamworks.com/tips/detail/113">
                             <img src="http://japan.vietnamworks.com/uploads-image/J9Iqld7Yn-grads-a-20150120-870x579-2416-1422416453.jpg" alt="article" class="img-responsive">
                         </a>
@@ -322,7 +256,7 @@
             </div>
             <div class="col-sm-4">
                 <div class="ibox shadow">
-                    <div class="ibox-content blog-content">                        
+                    <div class="ibox-content blog-content item">                        
                         <a href="http://japan.vietnamworks.com/tips/detail/112">
                             <img src="http://japan.vietnamworks.com/uploads-image/PbdrpiF0kyary-japanese-flag-615-415x260.jpg" alt="article" class="img-responsive">
                         </a>

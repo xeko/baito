@@ -1,19 +1,16 @@
 <?php get_header(); ?>
+<div class="container">
+    <div class="row">
+        <!-- section -->
+        <section>
 
-	<main role="main">
-		<!-- section -->
-		<section>
+            <?php get_template_part('job-loop'); ?>
 
-			<h1><?php echo sprintf( __( '%s Search Results for ', 'html5blank' ), $wp_query->found_posts ); echo get_search_query(); ?></h1>
+            <?php get_template_part('pagination'); ?>
 
-			<?php get_template_part('loop'); ?>
+        </section>
+        <!-- /section -->
+    </div>
+</div>
 
-			<?php get_template_part('pagination'); ?>
-
-		</section>
-		<!-- /section -->
-	</main>
-
-<?php get_sidebar(); ?>
-
-<?php get_footer(); ?>
+<?php get_footer();

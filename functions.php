@@ -8,6 +8,7 @@
 require_once(TEMPLATEPATH . '/admin/admin-functions.php');
 require_once(TEMPLATEPATH . '/admin/admin-interface.php');
 require_once(TEMPLATEPATH . '/admin/theme-settings.php');
+require_once(TEMPLATEPATH . '/inc/jobs-post-type.php');
 
 define('THEME_NAME', 'baito');
 
@@ -113,9 +114,12 @@ function header_scripts() {
 
         wp_register_script('bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array('jquery'), '3.3.6'); // Custom scripts
         wp_enqueue_script('bootstrap'); // Enqueue it!
-        
+
         wp_register_script('chosen', get_template_directory_uri() . '/js/chosen.jquery.min.js', array('jquery'), '1.4.2'); // Custom scripts
         wp_enqueue_script('chosen'); // Enqueue it!
+
+        wp_register_script('matchHeight', get_template_directory_uri() . '/js/jquery.matchHeight-min.js', array('jquery'), '1.4.2'); // Custom scripts
+        wp_enqueue_script('matchHeight'); // Enqueue it!
     }
 }
 
@@ -126,7 +130,7 @@ function html5blank_styles() {
 
     wp_register_style('font-awesome', get_template_directory_uri() . '/css/font-awesome.min.css', array(), '4.6.3', 'all');
     wp_enqueue_style('font-awesome'); // Enqueue it!
-    
+
     wp_register_style('chosen', get_template_directory_uri() . '/css/chosen.min.css', array(), '1.4.2', 'all');
     wp_enqueue_style('chosen'); // Enqueue it!
 
@@ -1133,4 +1137,12 @@ function add_search_to_menu($items, $args) {
     return $items;
 }
 
-add_filter('wp_nav_menu_items', 'add_search_to_menu', 10, 2);
+//add_filter('wp_nav_menu_items', 'add_search_to_menu', 10, 2);
+
+function cut_title($text, $len = 30) { //Hàm cắt tiêu đề Unicode
+    mb_internal_encoding('UTF-8');
+    if ((mb_strlen($text, 'UTF-8') > $len))
+        $text = mb_substr($text, 0, $len, 'UTF-8') . "...";
+    return $text;
+}
+
