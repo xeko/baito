@@ -9,6 +9,7 @@ require_once(TEMPLATEPATH . '/admin/admin-functions.php');
 require_once(TEMPLATEPATH . '/admin/admin-interface.php');
 require_once(TEMPLATEPATH . '/admin/theme-settings.php');
 require_once(TEMPLATEPATH . '/inc/jobs-post-type.php');
+require_once(TEMPLATEPATH . '/inc/widgets_init.php');
 
 define('THEME_NAME', 'baito');
 
@@ -117,6 +118,9 @@ function header_scripts() {
 
         wp_register_script('chosen', get_template_directory_uri() . '/js/chosen.jquery.min.js', array('jquery'), '1.4.2'); // Custom scripts
         wp_enqueue_script('chosen'); // Enqueue it!
+        
+        wp_register_script('bootstrapValidator', get_template_directory_uri() . '/js/bootstrapValidator.min.js', array('jquery'), '0.5.2'); // Custom scripts
+        wp_enqueue_script('bootstrapValidator'); // Enqueue it!
 
         wp_register_script('matchHeight', get_template_directory_uri() . '/js/jquery.matchHeight-min.js', array('jquery'), '1.4.2'); // Custom scripts
         wp_enqueue_script('matchHeight'); // Enqueue it!
@@ -133,6 +137,9 @@ function html5blank_styles() {
 
     wp_register_style('chosen', get_template_directory_uri() . '/css/chosen.min.css', array(), '1.4.2', 'all');
     wp_enqueue_style('chosen'); // Enqueue it!
+    
+    wp_register_style('bootstrapValidator', get_template_directory_uri() . '/css/bootstrapValidator.min.css', array(), '0.5.2', 'all');
+    wp_enqueue_style('bootstrapValidator'); // Enqueue it!
 
     wp_register_style('default-style', get_template_directory_uri() . '/style.css', array(), '1.1', 'all');
     wp_enqueue_style('default-style'); // Enqueue it!
@@ -184,31 +191,6 @@ function add_slug_to_body_class($classes) {
     }
 
     return $classes;
-}
-
-// If Dynamic Sidebar Exists
-if (function_exists('register_sidebar')) {
-    // Define Sidebar Widget Area 1
-    register_sidebar(array(
-        'name' => __('Widget Blog', 'Blog'),
-        'description' => __('Description for this widget-area...', 'Blog'),
-        'id' => 'widget-blog',
-        'before_widget' => '<div id="%1$s" class="%2$s widget">',
-        'after_widget' => '</div>',
-        'before_title' => '<h3 class="widget-title"><span>',
-        'after_title' => '</span></h3>'
-    ));
-
-    // Define Sidebar Widget Area 2
-    register_sidebar(array(
-        'name' => __('Widget Area 2', 'Blog'),
-        'description' => __('Description for this widget-area...', 'Blog'),
-        'id' => 'widget-area-2',
-        'before_widget' => '<div id="%1$s" class="%2$s">',
-        'after_widget' => '</div>',
-        'before_title' => '<h3>',
-        'after_title' => '</h3>'
-    ));
 }
 
 // Remove wp_head() injected Recent Comment styles

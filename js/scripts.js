@@ -62,6 +62,65 @@ jQuery(document).ready(function ($) {
     $("#location").chosen({
         placeholder_text_multiple: "Chọn địa điểm",
     });
-    
+
     $('.item').matchHeight();
+
+    $('[data-toggle="tooltip"]').tooltip();
+
+    $('#entry_form')
+            .bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    'input_form[fullname]': {
+                        message: 'Tên không lợp lệ',
+                        validators: {
+                            notEmpty: {
+                                message: 'Tên không được để trống'
+                            },
+                            stringLength: {
+                                min: 3,
+                                max: 30,
+                                message: 'Tên phải ít nhất là 3 ký tự'
+                            },
+                            /*remote: {
+                             url: 'remote.php',
+                             message: 'The username is not available'
+                             },*/
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9_\.]+$/,
+                                message: 'Tên không hợp lệ'
+                            }
+                        }
+                    },
+                    'input_form[email]': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Email không được để trống'
+                            },
+                            emailAddress: {
+                                message: 'Email không đúng định dạng'
+                            }
+                        }
+                    },
+                    'input_form[telephone_number]': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Hãy nhập vào số điện thoại'
+                            }
+                        }
+                    },
+                    'input_form[address]': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Hãy nhập vào địa chỉ của bạn'
+                            }
+                        }
+                    }
+                }
+            });
 });

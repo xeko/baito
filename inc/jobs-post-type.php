@@ -1,7 +1,7 @@
 <?php
 
-$args = array(
-    'labels' => array(
+function job_list() {
+    $labels = array(
         'all_items' => 'Jobs',
         'menu_name' => 'Jobs',
         'singular_name' => 'Jobs',
@@ -12,14 +12,26 @@ $args = array(
         'search_items' => 'Search Jobs',
         'not_found' => 'No jobs found',
         'not_found_in_trash' => 'No jobs found in trash'
-    ),
-    'supports' => array('title', 'editor', 'author', 'revisions'),
-    'menu_position' => 5,
-    'public' => true
-);
-register_post_type('cv_job', $args);
+    );
 
-add_action('init', 'job_category');
+    $args = array(
+        'labels' => $labels,
+        'supports' => array('title', 'editor', 'author', 'revisions'),
+        'public' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'show_in_nav_menus' => true,
+        'show_in_admin_bar' => true,
+        'menu_position' => 10,
+        'menu_icon' => get_template_directory_uri() . '/img/job.png',
+        'can_export' => true,
+        'has_archive' => false,
+        'exclude_from_search' => false,
+        'publicly_queryable' => true,
+    );
+    register_post_type('cv_job', $args);
+}
+add_action('init', 'job_list');
 
 function job_category() {
     register_taxonomy('job_category', 'cv_job', array(
@@ -86,6 +98,7 @@ function job_salary() {
 }
 
 add_action('init', 'job_keyword');
+
 function job_keyword() {
     register_taxonomy('job_keyword', 'cv_job', array(
         'label' => 'Job Keyword',
@@ -166,10 +179,10 @@ function cv_baito_show_box() {
                 echo '<input type="checkbox" name="', $field['id'], '" id="', $field['id'], '"', $meta ? ' checked="checked"' : '', ' />';
                 break;
             case 'image':
-                $display = $meta == ""? "none": "inline-block";
+                $display = $meta == "" ? "none" : "inline-block";
                 echo '<input class="element-upload" name="', $field['id'], '" type="hidden" value="' . $meta . '" />';
                 echo '<a href="javascript;;" id="cover_image_button" class="button button-primary">Select Image</a> ';
-                echo '<a href="javascript;;" class="remove-image button after-upload" style="display: '.$display.'">Remove</a>';
+                echo '<a href="javascript;;" class="remove-image button after-upload" style="display: ' . $display . '">Remove</a>';
                 echo '<div class="image" style="margin-top: 8px;">';
                 if (!empty($meta)) {
                     echo wp_get_attachment_image($meta, array("100", "100"));
@@ -193,17 +206,17 @@ add_action('admin_enqueue_scripts', 'load_custom_wp_admin_style');
 // Save data from meta box
 function job_meta_save_data($post_id) {
     global $meta_box;
-     
+
     // verify nonce
     if (!wp_verify_nonce($_POST['job_meta_box_nonce'], basename(__FILE__))) {
         return $post_id;
     }
- 
+
     // check autosave
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return $post_id;
     }
- 
+
     // check permissions
     if ('cv_job' == $_POST['post_type']) {
         if (!current_user_can('edit_page', $post_id)) {
@@ -212,11 +225,11 @@ function job_meta_save_data($post_id) {
     } elseif (!current_user_can('edit_post', $post_id)) {
         return $post_id;
     }
-     
+
     foreach ($meta_box['fields'] as $field) {
         $old = get_post_meta($post_id, $field['id'], true);
         $new = $_POST[$field['id']];
-         
+
         if ($new && $new != $old) {
             update_post_meta($post_id, $field['id'], $new);
         } elseif ('' == $new && $old) {
@@ -224,4 +237,72 @@ function job_meta_save_data($post_id) {
         }
     }
 }
+
 add_action('save_post', 'job_meta_save_data');
+
+function job_application() {
+    $labels = array(
+        'name' => _x('Jobs Application', 'baito'),
+        'singular_name' => _x('Jobs Application', 'baito'),
+        'menu_name' => __('Jobs Application', 'baito'),
+        'all_items' => __('Jobs Application', 'baito'),
+        'view_item' => __('View Jobs Application', 'baito'),
+        'add_new_item' => __('Add New Jobs Application', 'baito'),
+        'add_new' => __('Add New', 'baito'),
+        'edit_item' => __('Edit', 'baito'),
+        'update_item' => __('Update Jobs Application', 'baito'),
+        'search_items' => __('Search Jobs Application', 'baito'),
+        'not_found' => __('Not found Jobs Application.', 'baito'),
+        'not_found_in_trash' => __('Not found Jobs Application.', 'baito'),
+    );
+    $args = array(
+        'label' => __('sproduct', 'baito'),
+        'description' => __('Quản lý người dùng đăng ký công việc', 'baito'),
+        'labels' => $labels,
+        'supports' => array('title', 'editor'),
+        'public' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'show_in_nav_menus' => true,
+        'show_in_admin_bar' => true,
+        'menu_position' => 10,
+        'menu_icon' => get_template_directory_uri() . '/img/Group.png',
+        'can_export' => true,
+        'has_archive' => false,
+        'exclude_from_search' => false,
+        'publicly_queryable' => true,
+        'capability_type' => 'post'
+    );
+    register_post_type('job_application', $args);
+}
+
+add_action('init', 'job_application');
+
+/**
+ * Add row in post type job application
+ */
+add_filter('manage_edit-job_application_columns', 'job_application_edit_post_columns');
+
+function job_application_edit_post_columns($columns) {
+
+    $columns = array(
+        'cb' => '<input type="checkbox" />',
+        'status' => 'Status',
+        'title' => 'Ứng viên',
+        'job_name'  => 'Công việc',
+        'date' => __('Thời gian')
+    );
+
+    return $columns;
+}
+
+add_action('manage_post_job_application_custom_column', 'job_application_manage_post_columns', 10, 2);
+
+function job_application_manage_post_columns($column, $post_id) {
+
+    switch ($column) {
+        
+        default :
+            break;
+    }
+}
