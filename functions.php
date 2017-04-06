@@ -735,7 +735,7 @@ function get_taxonomies_terms($post_id, $taxonomy_slug) {
     if (!empty($terms)) {
         $out[] = "<ul class='list-inline small' id='job_type'>";
         foreach ($terms as $term) {
-            $out[] = sprintf('<li><a href="%1$s" data-toggle="tooltip" title="Click để xem các công việc thuộc '.$term->name.'" target="_blank">%2$s</a></li>', esc_url(get_term_link($term->slug, $taxonomy_slug)), esc_html($term->name)
+            $out[] = sprintf('<li><a href="%1$s" data-toggle="tooltip" title="Click để xem các công việc thuộc ' . $term->name . '" target="_blank">%2$s</a></li>', esc_url(get_term_link($term->slug, $taxonomy_slug)), esc_html($term->name)
             );
         }
         $out[] = "\n</ul>\n";
@@ -744,6 +744,8 @@ function get_taxonomies_terms($post_id, $taxonomy_slug) {
     return implode('', $out);
 }
 
-function job_search ($conditions = array()) {
-    
+add_action('init', 'add_query_args');
+
+function add_query_args() {
+    add_query_arg('level');
 }

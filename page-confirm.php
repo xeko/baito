@@ -21,14 +21,16 @@
 //                    if (isset($_POST['submit']) && isset($_POST['job_apply_nonce_field']) && wp_verify_nonce($_POST['job_apply_nonce_field'], 'job_apply_nonce')):
                     
                     $apply_info = array(
-                        'post_title' => wp_strip_all_tags($_POST['input_form']['fullname']),
-                        'post_content' => $_POST['input_form']['entry_appeal_point'],
+                        'post_title' => wp_strip_all_tags($_POST['input_form']['fullname']),                        
                         'post_type' => 'job_application',
                     );
 
                         $job_apply = wp_insert_post($apply_info);
                         if ($job_apply) {
                             // insert post meta
+                            $job_field = array(
+                                
+                            );
 //                            add_post_meta($post_id, '_your_custom_1', $custom1);
                             
                             wp_redirect(get_page_link(103));

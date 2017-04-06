@@ -103,23 +103,23 @@
     <div class="row">
         <div class="ibox box-level shadow text-center">
             <div class="ibox-title">
-                <h5 class="text-uppercase text-left">Tìm kiếm công việc theo trình độ tiếng Nhật</h5>
+                <h5 class="text-uppercase text-left">Tìm kiếm theo trình độ tiếng Nhật</h5>
             </div>
             <ul class="level clearfix">
                 <li class="col-sm-3 col-xs-6">
-                    <a href="#" target="_blank" class="text-uppercase text-center icon-square">N1</a>
+                    <a href="<?php the_permalink(118) ?>?level=N1" target="_blank" class="text-uppercase text-center icon-square">N1</a>
                     <span class="text-uppercase">Trình độ N1</span>
                 </li>
                 <li class="col-sm-3 col-xs-6">
-                    <a href="#" target="_blank" class="text-uppercase text-center icon-square">N2</a>
+                    <a href="<?php the_permalink(118) ?>?level=N2" target="_blank" class="text-uppercase text-center icon-square">N2</a>
                     <span class="text-uppercase">Trình độ N2</span>
                 </li>
                 <li class="col-sm-3 col-xs-6">
-                    <a href="#" target="_blank" class="text-uppercase text-center icon-square">N3</a>
+                    <a href="<?php the_permalink(118) ?>?level=N3" target="_blank" class="text-uppercase text-center icon-square">N3</a>
                     <span class="text-uppercase">Trình độ N3</span>
                 </li>
                 <li class="col-sm-3 col-xs-6">
-                    <a href="#" target="_blank" class="text-uppercase text-center icon-square">Mới biết</a>
+                    <a href="<?php the_permalink(118) ?>?level=N4" target="_blank" class="text-uppercase text-center icon-square">Mới biết</a>
                     <span class="text-uppercase">Trình độ Mới biết</span>
                 </li>
             </ul><!--End .level-->

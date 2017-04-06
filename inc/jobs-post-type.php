@@ -141,6 +141,7 @@ $meta_box = array(
         array('id' => '_job_content', 'label' => __('Nội dung công việc', 'baito'), 'type' => 'textarea'),
         array('id' => '_job_experience', 'label' => __('Kinh nghiệm', 'baito'), 'type' => 'text'),
         array('id' => '_job_note', 'label' => __('Ghi chú', 'baito'), 'type' => 'textarea'),
+        array('id' => '_job_status', 'label' => __('Status', 'baito'), 'type' => 'select', 'options' => array(1 => 'Open', 0 => 'Closed')),
     )
 );
 
@@ -391,7 +392,7 @@ function job_application_edit_post_columns($columns) {
     return $columns;
 }
 
-add_action('manage_post_job_application_custom_column', 'job_application_manage_post_columns', 10, 2);
+add_action('manage_posts_custom_column', 'job_application_manage_post_columns', 10, 2);
 
 function job_application_manage_post_columns($column, $post_id) {
 
@@ -401,3 +402,156 @@ function job_application_manage_post_columns($column, $post_id) {
             break;
     }
 }
+
+/**
+ * Add row in post type cv_job
+ */
+add_filter('manage_edit-cv_job_columns', 'cv_job_edit_post_columns', 10, 2);
+
+function cv_job_edit_post_columns($columns) {
+
+    $columns = array(
+        'cb' => '<input type="checkbox" />',
+        'title' => 'Title',
+        'apply_number' => 'Application',
+        'job_status' => 'Status',
+        'job_view' => 'Views',
+        'author' => __('Author'),
+        'date' => __('Date')
+    );
+
+    return $columns;
+}
+
+add_action('manage_posts_custom_column', 'cv_job_manage_post_columns', 10, 2);
+
+function cv_job_manage_post_columns($column, $post_id) {
+    global $wpdb;
+    switch ($column) {
+        case 'apply_number':
+            $apply_count = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type = 'cv_job' AND post_parent = {$post_id->ID}");
+            if ($apply_count > 0) {
+                $url_args = array('s' => '', 'post_status' => 'all', 'post_type' => 'job_application', 'job' => $post_id->ID, 'action' => -1, 'action2' => -1);
+                $application_link = esc_url(add_query_arg($url_args, admin_url('edit.php')));
+                echo '<strong><a href="' . $application_link . '">' . $application_count . '</a></strong>';
+            } else {
+                echo '-';
+            }
+            break;
+        case 'job_view':
+            echo get_PostViews(get_the_ID()) . ' view';
+            break;
+        case 'job_status':
+            $status = get_post_meta(get_the_ID(), '_job_status', true);
+            echo $status;
+            break;
+        default :
+            break;
+    }
+}
+
+/* Popular Posts by Views */
+
+function wp_set_post_views($postID) {
+//    global $count_key;
+    $count_key = 'job_views_count';
+    $count = get_post_meta($postID, $count_key, true);
+    if ($count == '') {
+        $count = 0;
+        delete_post_meta($postID, $count_key);
+        add_post_meta($postID, $count_key, '0');
+    } else {
+        $count++;
+        update_post_meta($postID, $count_key, $count);
+    }
+}
+
+function wp_track_post_views($post_id) {
+    if (!is_single())
+        return;
+    if (empty($post_id)) {
+        global $post;
+        $post_id = $post->ID;
+    }
+    wp_set_post_views($post_id);
+}
+
+add_action('wp_head', 'wp_track_post_views');
+
+function get_PostViews($post_ID) {
+    $count_key = 'job_views_count';
+    $count = get_post_meta($post_ID, $count_key, true);
+    $count = empty($count) ? 0 : $count;
+    return $count;
+}
+
+/**
+ * Reorder column
+ * @param array $newcolumn
+ * @return string
+ */
+function register_post_column_views_sortable($newcolumn) {
+    $newcolumn['job_view'] = 'job_view';
+    $newcolumn['job_status'] = 'job_status';
+    return $newcolumn;
+}
+
+add_filter('manage_edit-cv_job_sortable_columns', 'register_post_column_views_sortable');
+
+function sort_views_column($vars) {
+    if (isset($vars['orderby']) && 'job_view' == $vars['orderby']) {
+        switch ($vars['orderby']):
+            case 'job_view':
+                $vars = array_merge($vars, array(
+                    'meta_key' => 'job_views_count',
+                    'orderby' => 'meta_value_num')
+                );
+                break;
+            case 'job_status':
+                $vars = array_merge($vars, array(
+                    'meta_key' => '_job_status',
+                    'orderby' => 'meta_value_num')
+                );
+                break;
+        endswitch;
+    }
+    return $vars;
+}
+
+add_filter('request', 'sort_views_column');
+
+function shortcode_top_views($params) {
+    $display = isset($params['num']) ? (int) $params['num'] : 5;
+
+    $conditions = array(
+        'post_type' => array('post'),
+        'posts_per_page' => $display,
+        'post_status' => 'publish',
+        'meta_key' => 'job_views_count',
+        'orderby' => 'meta_value_num',
+        'order' => 'DESC'
+    );
+
+    $return_str .= '';
+
+    $return_str .= '<ul id="top-view" class="list-unstyled">';
+    $query = new WP_query($conditions);
+    if ($query->have_posts()): while ($query->have_posts()): $query->the_post();
+            $count = get_post_meta(get_the_ID(), 'tanaka_post_views_count', true);
+            $return_str .= '<li>
+            <a href="' . get_permalink(get_the_ID()) . '" title="' . get_the_title() . '" class="zoom-effect">
+            <figure class="eyecatch">' . get_the_post_thumbnail(get_the_ID(), array(80, 80), array('class' => 'pull-left')) . '</figure>' . get_the_title() . '
+            <ul id="post-meta" class="list-inline list-unstyled">
+                        <li><i class="fa fa-clock-o" aria-hidden="true"></i> ' . get_the_time("Y-m-d", get_the_ID()) . '</li>
+                        <li><i class="fa fa-eye" aria-hidden="true"></i> ' . $count . ' views</li>
+                    </ul>
+            ';
+            $return_str .= '</a></li> ';
+        endwhile;
+    endif;
+    wp_reset_query();
+    $return_str .= '</ul>';
+    return $return_str;
+}
+
+add_shortcode('top_views', 'shortcode_top_views');
