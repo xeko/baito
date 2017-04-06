@@ -16,7 +16,7 @@ function job_list() {
 
     $args = array(
         'labels' => $labels,
-        'supports' => array('title', 'editor', 'author', 'revisions'),
+        'supports' => array('title', 'author', 'revisions'),
         'public' => true,
         'show_ui' => true,
         'show_in_menu' => true,
@@ -31,7 +31,10 @@ function job_list() {
     );
     register_post_type('cv_job', $args);
 }
+
 add_action('init', 'job_list');
+
+add_action('init', 'job_category');
 
 function job_category() {
     register_taxonomy('job_category', 'cv_job', array(
@@ -129,17 +132,24 @@ $meta_box = array(
         array('id' => '_cover_image', 'label' => __('Cover Image', 'baito'), 'type' => 'image'),
         array('id' => '_salary', 'label' => __('Tiền lương', 'baito'), 'type' => 'text'),
         array('id' => '_location', 'label' => __('Nơi làm việc', 'baito'), 'type' => 'text'),
-        array('id' => '_time', 'label' => __('Thời gian làm việc', 'baito'), 'type' => 'text'),
         array('id' => '_map', 'label' => __('Bản đồ', 'baito'), 'type' => 'text'),
+        array('id' => '_job_time', 'label' => __('Thời gian làm việc', 'baito'), 'type' => 'text'),
+        array('id' => '_job_day', 'label' => __('Số ngày làm việc', 'baito'), 'type' => 'text'),
+        array('id' => '_station', 'label' => __('Ga gần nhất', 'baito'), 'type' => 'text'),
+        array('id' => '_skill_japanese', 'label' => __('Kĩ năng tiếng Nhật', 'baito'), 'type' => 'select', 'options' => array('N1', 'N2', 'N3', 'N4')),
+        array('id' => '_transport_cost', 'label' => __('Chi phí đi lại', 'baito'), 'type' => 'text'),
+        array('id' => '_job_content', 'label' => __('Nội dung công việc', 'baito'), 'type' => 'textarea'),
+        array('id' => '_job_experience', 'label' => __('Kinh nghiệm', 'baito'), 'type' => 'text'),
+        array('id' => '_job_note', 'label' => __('Ghi chú', 'baito'), 'type' => 'textarea'),
     )
 );
 
-function bcdonline_add_box() {
+function job_add_box() {
     global $meta_box;
     add_meta_box($meta_box['id'], $meta_box['title'], 'cv_baito_show_box', 'cv_job', $meta_box['context'], $meta_box['priority']);
 }
 
-add_action('admin_menu', 'bcdonline_add_box');
+add_action('admin_menu', 'job_add_box');
 
 function cv_baito_show_box() {
     global $meta_box, $post;
@@ -278,6 +288,91 @@ function job_application() {
 
 add_action('init', 'job_application');
 
+$meta_box_uv = array(
+    'id' => "uv_settings",
+    'title' => __('Thông tin ứng viên', 'baito'),
+    'page' => 'job_application',
+    'context' => 'normal',
+    'priority' => 'high',
+    'fields' => array(
+        array('id' => '_gender', 'label' => __('Giới tính', 'baito'), 'type' => 'label'),
+        array('id' => '_birthdate', 'label' => __('Ngày sinh', 'baito'), 'type' => 'label'),
+        array('id' => '_tel', 'label' => __('Điện thoại', 'baito'), 'type' => 'label'),
+        array('id' => '_email', 'label' => __('Email', 'baito'), 'type' => 'label'),
+        array('id' => '_address', 'label' => __('Địa chỉ', 'baito'), 'type' => 'label'),
+        array('id' => '_employer', 'label' => __('Nghề nghiệp', 'baito'), 'type' => 'label'),
+        array('id' => '_country', 'label' => __('Quốc tịch', 'baito'), 'type' => 'label'),
+        array('id' => '_jlpt_level', 'label' => __('Trình độ tiếng Nhật / JLPT', 'baito'), 'type' => 'label'),
+        array('id' => '_about_me', 'label' => __('Giới thiệu bản thân', 'baito'), 'type' => 'label'),
+    )
+);
+
+function uv_add_box() {
+    global $meta_box_uv;
+    add_meta_box($meta_box_uv['id'], $meta_box_uv['title'], 'uv_show_box', 'job_application', $meta_box_uv['context'], $meta_box_uv['priority']);
+}
+
+add_action('admin_menu', 'uv_add_box');
+
+function uv_show_box() {
+    global $meta_box_uv, $post;
+
+    // Use nonce for verification
+    echo '<input type="hidden" name="uv_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
+
+    echo '<table class="form-table">';
+
+    foreach ($meta_box_uv['fields'] as $field) {
+        // get current post meta data
+        $meta = get_post_meta($post->ID, $field['id'], true);
+
+        echo '<tr>',
+        '<th style="width:20%"><label for="', $field['id'], '">', $field['label'], '</label></th>',
+        '<td>';
+        switch ($field['type']) {
+            case 'text':
+                echo '<input type="text" name="', $field['id'], '" id="', $field['id'], '" value="', htmlspecialchars($meta) ? htmlspecialchars($meta) : htmlspecialchars($field['std']), '" size="30" style="width:97%" />', '<br />', $field['desc'];
+                break;
+            case 'textarea':
+                echo '<textarea name="', $field['id'], '" id="', $field['id'], '" cols="60" rows="4" style="width:97%">', $meta ? $meta : $field['std'], '</textarea>', '<br />', $field['desc'];
+                break;
+            case 'select':
+                echo '<select name="', $field['id'], '" id="', $field['id'], '">';
+                foreach ($field['options'] as $option) {
+                    echo '<option', $meta == $option ? ' selected="selected"' : '', '>', $option, '</option>';
+                }
+                echo '</select>';
+                break;
+            case 'radio':
+                foreach ($field['options'] as $option) {
+                    echo '<input type="radio" name="', $field['id'], '" value="', $option['value'], '"', $meta == $option['value'] ? ' checked="checked"' : '', ' />', $option['name'];
+                }
+                break;
+            case 'checkbox':
+                echo '<input type="checkbox" name="', $field['id'], '" id="', $field['id'], '"', $meta ? ' checked="checked"' : '', ' />';
+                break;
+            case 'image':
+                $display = $meta == "" ? "none" : "inline-block";
+                echo '<input class="element-upload" name="', $field['id'], '" type="hidden" value="' . $meta . '" />';
+                echo '<a href="javascript;;" id="cover_image_button" class="button button-primary">Select Image</a> ';
+                echo '<a href="javascript;;" class="remove-image button after-upload" style="display: ' . $display . '">Remove</a>';
+                echo '<div class="image" style="margin-top: 8px;">';
+                if (!empty($meta)) {
+                    echo wp_get_attachment_image($meta, array("100", "100"));
+                }
+                echo '</div>';
+                break;
+            default:
+                echo htmlspecialchars($meta) ? htmlspecialchars($meta) : htmlspecialchars($field['std']);
+                break;
+        }
+        echo '<td>',
+        '</tr>';
+    }
+
+    echo '</table>';
+}
+
 /**
  * Add row in post type job application
  */
@@ -289,7 +384,7 @@ function job_application_edit_post_columns($columns) {
         'cb' => '<input type="checkbox" />',
         'status' => 'Status',
         'title' => 'Ứng viên',
-        'job_name'  => 'Công việc',
+        'job_name' => 'Công việc',
         'date' => __('Thời gian')
     );
 
@@ -301,7 +396,7 @@ add_action('manage_post_job_application_custom_column', 'job_application_manage_
 function job_application_manage_post_columns($column, $post_id) {
 
     switch ($column) {
-        
+
         default :
             break;
     }

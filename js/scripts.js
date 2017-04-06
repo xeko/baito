@@ -123,4 +123,12 @@ jQuery(document).ready(function ($) {
                     }
                 }
             });
+    $('nav').headroom({
+        "offset": 200,
+        "classes": {
+            "initial": "animated",
+            "pinned": "slideDown",
+            "unpinned": "slideUp"
+        }
+    });
 });

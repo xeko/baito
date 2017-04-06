@@ -15,7 +15,7 @@
     MAIN
 \*------------------------------------*/
 
-/* global box-sizing */
+@import "css/menu-hide.css";
 *,
 *:after,
 *:before {
@@ -223,7 +223,12 @@ header {
     padding-bottom: 0px;
     background: #fff;
 }
-nav.navbar {margin-bottom: 0;}
+nav.navbar {
+    background: rgba(255, 255, 255, 0.81);
+}
+#wrapper {
+    margin-top: 50px;
+}
 #wrapper .col-md-10 {
     background: #fff;
 }
@@ -292,6 +297,7 @@ nav.navbar {margin-bottom: 0;}
     color: #666;
 }
 .red {color: red;}
+
 /*------------------------------------*\
     SEARCH FORM
 \*------------------------------------*/
@@ -504,6 +510,9 @@ nav.navbar {margin-bottom: 0;}
 }
 .blog-content h2 {
     font-size: 1.6em;
+}
+.label-danger a {
+    color: #fff;
 }
 /**********START SIDEBAR***************/
 .widget {
@@ -1358,7 +1367,7 @@ h3.title-tbl span {
     display: inline-block;
 }
 .stepbox .step.current .step-num {
-    color: #ad1e24;
+    color: #0a2f6d;
 }
 .open-login {
     padding: 3px 0;
@@ -1377,6 +1386,9 @@ h3.title-tbl span {
     margin-bottom: 20px;
     padding-left: 10px;
     border-left: 6px solid #0a2f6d;
+}
+.text-desc dt, .text-desc dd {
+    font-size: 0.9em;
 }
 
 /*!------------------------------------*\

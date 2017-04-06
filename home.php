@@ -64,18 +64,7 @@
                                 $terms = get_terms('job_category', array('hide_empty' => 0));
                                 echo '<select multiple="true" id="cateList" class="chosen-select form-control" name="job_category[]">';
                                 foreach ($terms as $term) {
-                                    if ($term->parent == 0) {
-                                        if ($i++ != 0)
-                                            echo '</optgroup>';
-                                        echo '<optgroup label="' . $term->name . '">';
-                                        $id = $term->term_id;
-                                        $args = array("child_of" => $id, 'hide_empty' => 0);
-                                        $this_term = get_terms('job_category', $args);
-                                        foreach ($this_term as $the_term) {
-                                            $term_name = str_replace($term->name, '', $the_term->name);
-                                            echo '<option value="' . $the_term->term_id . '">' . $the_term->name . '</option>';
-                                        }
-                                    }
+                                    echo '<option value="' . $term->term_id . '">' . $term->name . '</option>';
                                 }
                                 echo '</select>';
                                 ?>                                                        
@@ -190,7 +179,7 @@
                                     <dt>Tiền lương</dt>
                                     <dd><?php echo get_post_meta(get_the_ID(), '_salary', true); ?></dd>
                                     <dt>Nơi làm việc</dt>
-                                    <dd><?php echo get_post_meta(get_the_ID(), '_location', true); ?><?php if (!empty($map)): ?> <span class="label label-danger"><a href="<?php echo $map ?>">bản đồ</a></span><?php endif ?></dd>
+                                    <dd><?php echo get_post_meta(get_the_ID(), '_location', true); ?><?php if (!empty($map)): ?> <span class="label label-danger"><a href="<?php echo $map ?>" target="_blank">bản đồ</a></span><?php endif ?></dd>
                                     <dt>Thời gian làm việc</dt>
                                     <dd><?php echo get_post_meta(get_the_ID(), '_time', true); ?></dd>
                                 </dl>

@@ -107,22 +107,28 @@ function footer_navigation() {
 function header_scripts() {
     if ($GLOBALS['pagenow'] != 'wp-login.php' && !is_admin()) {
 
-        wp_register_script('html5blankscripts', get_template_directory_uri() . '/js/scripts.js', array('jquery', 'bxslider'), '1.0.0', true); // Custom scripts
-        wp_enqueue_script('html5blankscripts'); // Enqueue it!
+        wp_register_script('custom_script', get_template_directory_uri() . '/js/scripts.js', array('jquery', 'bxslider'), '1.0.0', true); // Custom scripts
+        wp_enqueue_script('custom_script'); // Enqueue it!
 
         wp_register_script('bxslider', get_template_directory_uri() . '/js/bxslider/jquery.bxslider.min.js', array('jquery'), '4.1.2'); // Conditional script(s)
         wp_enqueue_script('bxslider'); // Enqueue it!
 
-        wp_register_script('bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array('jquery'), '3.3.6'); // Custom scripts
+        wp_register_script('bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array('jquery'), '3.3.6');
         wp_enqueue_script('bootstrap'); // Enqueue it!
 
-        wp_register_script('chosen', get_template_directory_uri() . '/js/chosen.jquery.min.js', array('jquery'), '1.4.2'); // Custom scripts
+        wp_register_script('chosen', get_template_directory_uri() . '/js/chosen.jquery.min.js', array('jquery'), '1.4.2');
         wp_enqueue_script('chosen'); // Enqueue it!
-        
-        wp_register_script('bootstrapValidator', get_template_directory_uri() . '/js/bootstrapValidator.min.js', array('jquery'), '0.5.2'); // Custom scripts
+
+        wp_register_script('bootstrapValidator', get_template_directory_uri() . '/js/bootstrapValidator.min.js', array('jquery'), '0.5.2');
         wp_enqueue_script('bootstrapValidator'); // Enqueue it!
 
-        wp_register_script('matchHeight', get_template_directory_uri() . '/js/jquery.matchHeight-min.js', array('jquery'), '1.4.2'); // Custom scripts
+        wp_register_script('headroom', get_template_directory_uri() . '/js/headroom.min.js', array('jquery'), '0.9.3');
+        wp_enqueue_script('headroom'); // Enqueue it!
+
+        wp_register_script('jQuery.headroom', get_template_directory_uri() . '/js/jQuery.headroom.js', array('jquery'));
+        wp_enqueue_script('jQuery.headroom'); // Enqueue it!
+
+        wp_register_script('matchHeight', get_template_directory_uri() . '/js/jquery.matchHeight-min.js', array('jquery'), '1.4.2');
         wp_enqueue_script('matchHeight'); // Enqueue it!
     }
 }
@@ -137,7 +143,13 @@ function html5blank_styles() {
 
     wp_register_style('chosen', get_template_directory_uri() . '/css/chosen.min.css', array(), '1.4.2', 'all');
     wp_enqueue_style('chosen'); // Enqueue it!
-    
+
+    wp_register_style('animate', get_template_directory_uri() . '/css/animate.css', array(), '3.5.1', 'all');
+//    wp_enqueue_style('animate'); // Enqueue it!
+
+    wp_register_style('main', get_template_directory_uri() . '/css/main.css', array(), '3.5.1', 'all');
+//    wp_enqueue_style('main'); // Enqueue it!
+
     wp_register_style('bootstrapValidator', get_template_directory_uri() . '/css/bootstrapValidator.min.css', array(), '0.5.2', 'all');
     wp_enqueue_style('bootstrapValidator'); // Enqueue it!
 
@@ -511,330 +523,17 @@ function related_post() {
     echo '</ul></div>';
 }
 
-//add_action('init', 'akitsu_posttype_init');
-
-if (!function_exists('akitsu_posttype_init')) :
-
-    function akitsu_posttype_init() {
-
-
-
-        $param_labels = array(
-            'name' => _x('partner', 'post type general name', 'akitsu'),
-            'singular_name' => _x('OnePage', 'post type singular name', 'akitsu'),
-            'add_new' => _x('Add New Section', 'Section', 'akitsu'),
-            'add_new_item' => __('Add New Section', 'akitsu'),
-            'edit_item' => __('Edit Section', 'akitsu'),
-            'new_item' => __('New Section', 'akitsu'),
-            'all_items' => __('All Sections', 'akitsu'),
-            'view_item' => __('View Section', 'akitsu'),
-            'search_items' => __('Search Section', 'akitsu'),
-            'not_found' => __('No Section found', 'akitsu'),
-            'not_found_in_trash' => __('No Sections found in Trash', 'akitsu'),
-            'parent_item_colon' => '',
-            'menu_name' => __('partner', 'akitsu')
-        );
-
-        $akitsu_args = array(
-            'labels' => $param_labels,
-            'public' => true, //Kích hoạt post type
-            'publicly_queryable' => true, //Hiển thị các tham số trong query, phải đặt true
-            'show_ui' => true, //Hiển thị khung quản trị như Post/Page
-            'show_in_menu' => true, //Hiển thị trên Admin Menu
-            'query_var' => false, //Thiết lập query_var cho post type này. Mặc định theo tên của Custom Post Type.
-            'rewrite' => false,
-            'capability_type' => 'page',
-            'has_archive' => false, //Cho phép lưu trữ (month, date, year)
-            'hierarchical' => false, //Cho phép phân cấp, nếu là false thì post type này giống như Post, true thì giống như Page
-            'exclude_from_search' => true, //Loại bỏ khỏi kết quả tìm kiếm
-            'menu_position' => 16,
-            'menu_icon' => get_template_directory_uri() . '/img/icons/partnership-icon.png',
-            'supports' => array('revisions', 'page-attributes')
-        );
-
-        register_post_type('partner', $akitsu_args);
-        flush_rewrite_rules(false);
-    }
-
-endif;
-
-/* * **********BUTTON ADD MULTI IMAGE*************** */
-
-add_action('admin_init', 'add_post_gallery');
-add_action('admin_head-post.php', 'print_scripts');
-add_action('admin_head-post-new.php', 'print_scripts');
-add_action('save_post', 'update_post_gallery', 10, 2);
-
-/**
- * Add custom Meta Box to Posts post type
- */
-function add_post_gallery() {
-    add_meta_box(
-            'post_gallery', 'Image Uploader', 'post_gallery_options', 'partner', // here you can set post type name
-            'normal', 'core'
-    );
-}
-
-/**
- * Print the Meta Box content
- */
-function post_gallery_options() {
+add_action('admin_enqueue_scripts', function() {
     global $post;
-    $gallery_data = get_post_meta($post->ID, 'gallery_data', true);
-    $url_name_data = get_post_meta($post->ID, 'url_name_data', true);
-    // Use nonce for verification
-    wp_nonce_field(plugin_basename(__FILE__), 'noncename');
-    ?>
 
-    <div id="dynamic_form">
-
-        <div id="field_wrap">
-            <?php
-            if (isset($gallery_data['image_url'])) {
-                for ($i = 0; $i < count($gallery_data['image_url']); $i++) {
-                    ?>
-
-                    <div class="field_row">
-
-                        <div class="field_left">
-                            <div class="form_field">
-                                <label>URL</label>
-                                <input class="meta_name_url" type="text" name="sitename[image_url][]" 
-                                       value="<?php esc_html_e($url_name_data['image_url'][$i]); ?>" />
-                                <input type="hidden"
-                                       class="meta_image_url"
-                                       name="gallery[image_url][]"
-                                       value="<?php esc_html_e($gallery_data['image_url'][$i]); ?>"
-                                       />
-                            </div>
-                        </div>
-
-                        <div class="field_right image_wrap">
-                            <img src="<?php esc_html_e($gallery_data['image_url'][$i]); ?>" width="80" />
-                        </div>
-
-                        <div class="field_right">
-                            <input class="button" type="button" value="Choose File" onclick="add_image(this)" />
-                            <input class="button" type="button" value="Remove" onclick="remove_field(this)" />
-                        </div>
-
-                        <div class="clear" /></div> 
-                </div>
-                <?php
-            } // endif
-        } // endforeach
-        ?>
-    </div>
-
-    <div style="display:none" id="master-row">
-        <div class="field_row">
-            <div class="field_left">
-                <div class="form_field">
-                    <label>URL</label>
-                    <input class="meta_name_url" value="" type="text" name="sitename[image_url][]" />
-                    <input class="meta_image_url" value="" type="hidden" name="gallery[image_url][]" />
-                </div>
-            </div>
-            <div class="field_right image_wrap">
-            </div> 
-            <div class="field_right"> 
-                <input type="button" class="button" value="Choose File" onclick="add_image(this)" />                
-                <input class="button" type="button" value="Remove" onclick="remove_field(this)" /> 
-            </div>
-            <div class="clear"></div>
-        </div>
-    </div>
-
-    <div id="add_field_row">
-        <input class="button" type="button" value="Add Field" onclick="add_field_row();" />
-    </div>
-
-    </div>
-
-    <?php
-}
-
-/**
- * Print styles and scripts
- */
-function print_scripts() {
-    // Check for correct post_type
-    global $post;
-    if ('partner' != $post->post_type)// here you can set post type name
-        return;
-    ?>  
-    <style type="text/css">
-        .field_left {
-            float:left;
-        }
-
-        .field_right {
-            float:left;
-            margin-left:10px;
-        }
-        .field_right input {
-            margin-right: 4px;
-        }
-
-        .clear {
-            clear:both;
-        }
-
-        #dynamic_form {
-            width:100%;
-        }
-
-        #dynamic_form input[type=text] {
-            width:400px;
-        }
-
-        #dynamic_form .field_row {
-            border:1px solid #999;
-            margin-bottom:10px;
-            padding:10px;
-        }
-        #dynamic_form {
-
-        }
-        #dynamic_form label {
-            padding:0 6px;
-        }
-        #dynamic_form .field_row {
-            border: none;
-        }
-        #add_field_row {
-            border-top: 1px solid #E6E6E6;
-            padding-top: 10px;
-            margin-top: 20px;
-        }
-    </style>
-
-    <script type="text/javascript">
-        function add_image(obj) {
-            var parent = jQuery(obj).parent().parent('div.field_row');
-            var inputField = jQuery(parent).find("input.meta_image_url");
-
-            tb_show('', 'media-upload.php?TB_iframe=true');
-
-            window.send_to_editor = function (html) {
-                var url = jQuery(html).find('img').attr('src');
-                inputField.val(url);
-                jQuery(parent)
-                        .find("div.image_wrap")
-                        .html('<img src="' + url + '" width="80" />');
-
-                // inputField.closest('p').prev('.awdMetaImage').html('<img height=120 width=120 src="'+url+'"/><p>URL: '+ url + '</p>'); 
-
-                tb_remove();
-            };
-
-            return false;
-        }
-
-        function remove_field(obj) {
-            var parent = jQuery(obj).parent().parent();
-            //console.log(parent)
-            parent.remove();
-        }
-
-        function add_field_row() {
-            var row = jQuery('#master-row').html();
-            jQuery(row).appendTo('#field_wrap');
-        }
-    </script>
-    <?php
-}
-
-/**
- * Save post action, process fields
- */
-function update_post_gallery($post_id, $post_object) {
-    // Doing revision, exit earlier **can be removed**
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
-        return;
-
-    // Doing revision, exit earlier
-    if ('revision' == $post_object->post_type)
-        return;
-
-    // Verify authenticity
-    if (!wp_verify_nonce($_POST['noncename'], plugin_basename(__FILE__)))
-        return;
-
-    // Correct post type
-    if ('partner' != $_POST['post_type']) // here you can set post type name
-        return;
-
-    if ($_POST['gallery']) {
-        // Build array for saving post meta
-        $gallery_data = array();
-        $url_name_data = array();
-        for ($i = 0; $i < count($_POST['gallery']['image_url']); $i++) {
-            if ('' != $_POST['gallery']['image_url'][$i]) {
-                $gallery_data['image_url'][] = $_POST['gallery']['image_url'][$i];
-                $url_name_data['image_url'][] = $_POST['sitename']['image_url'][$i];
-            }
-        }
-
-        if ($gallery_data) {
-            update_post_meta($post_id, 'gallery_data', $gallery_data);
-            update_post_meta($post_id, 'url_name_data', $url_name_data);
-        } else {
-            delete_post_meta($post_id, 'gallery_data');
-            delete_post_meta($post_id, 'url_name_data');
-        }
-    }
-    // Nothing received, all fields are empty, delete option
-    else {
-        delete_post_meta($post_id, 'gallery_data');
-        delete_post_meta($post_id, 'url_name_data');
-    }
-}
-
-function partner_shortcode() {
-    ob_start();
-    query_posts(array(
-        'post_type' => 'partner',
-        'showposts' => 1,
-    ));
-    if (have_posts()) : while (have_posts()) : the_post();
-            $gallery_data = get_post_meta(get_the_ID(), 'gallery_data', true);
-            $url_name_data = get_post_meta(get_the_ID(), 'url_name_data', true);
-            ?>
-
-            <?php
-        endwhile;
-    endif;
-    wp_reset_query();
-
-    if (isset($gallery_data['image_url'])) {
-        $text_join = '';
-        $image = "<ul id='partner'>";
-
-        for ($i = 0; $i < count($gallery_data['image_url']); $i++) {
-            $partner_url = ($url_name_data['image_url'][$i] != "") ? $url_name_data['image_url'][$i] : "#";
-
-            $text_join .= '<li><a href="' . $partner_url . '" title="" class="thumbnail" target="_blank"><img src="' . $gallery_data['image_url'][$i] . '" /></a></li>';
-        }
-        $image .= $text_join;
-        $image .= '</ul>';
-        echo $image;
-    }
-    $content = ob_get_contents();
-    ob_end_clean();
-    return $content;
-}
-
-add_shortcode('partner_code', 'partner_shortcode');
-
-//Add thichbox js for admin
-function load_admin_things() {
     wp_enqueue_script('media-upload');
     wp_enqueue_script('thickbox');
     wp_enqueue_style('thickbox');
-}
 
-add_action('admin_enqueue_scripts', 'load_admin_things');
+    wp_enqueue_media(array(
+        'cv_job' => $post->post_type,
+    ));
+});
 
 class My_Custom_Nav_Walker extends Walker_Nav_Menu {
 
@@ -1005,107 +704,6 @@ function insert_attachment($file_handler, $post_id, $setthumb = 'false') {
     return $attach_id;
 }
 
-//Them nut login vao chi tiet cong viec
-function func_apply($content) {
-    $add_content = '';
-    if (is_single()):
-        $add_content = '
-    
-    <div class="card-item bg-info">
-        <h4 class="text-uppercase text-left">Để ứng tuyển, bạn phải đăng nhập/ hoăck đăng ký</h4>
-
-        <ul class="btn-group btn-group-justified" role="tablist">
-            <li class="btn-group active" role="tab" data-toggle="tab" data-target="#js-form-login-pane">
-                <a class="btn btn-block btn-sm btn-primary" href="#" title="Đăng nhập">Đăng nhập</a>
-            </li>
-            <li class="btn-group" role="tab" data-toggle="tab" data-target="#js-form-register-pane">
-                <a class="btn btn-block btn-sm btn-gray" href="#" title="Đăng ký">Đăng ký</a>
-            </li>
-        </ul>
-
-        <div class="tab-content">
-            <div id="js-form-login-pane" class="tab-pane fade active in" role="tabpanel">
-                <form action="#" method="post" role="form">
-
-                    <div class="row gutter-xs">
-                        <div class="col-sm-6 form-group">
-                            <label for="form-login-username">Eメール</label>
-                            <input class="form-control" type="text" id="form-login-username" name="username" value="" maxlength="255" aria-describedby="help-form-login">
-                        </div>
-                        <div class="col-sm-6 form-group">
-                            <label for="form-login-password">パスワード</label>
-                            <input class="form-control" type="password" id="form-login-password" name="password" value="" maxlength="40" aria-describedby="help-form-login">
-                        </div>
-                    </div>
-
-                    <ul class="list-inline-caret text-color text-right text-small pull-right-md">
-                        <li><a href="#" title="パスワードを忘れた方はこちら">パスワードを忘れた方はこちら</a></li>
-                        <li><a href="#" title="ログインできない場合">ログインできない場合</a></li>
-                    </ul>
-
-                    <input class="btn btn-lg block-xs-12 block-sm-12 block-md-4 btn-primary mt-15" type="submit" value="ログイン" name="userlogin">                        
-                </form>
-            </div>
-
-            <div id="js-form-register-pane" class="tab-pane fade" role="tabpanel">
-                <form action="#" method="post" role="form">
-                    <div class="row gutter-xs">
-                        <div class="col-sm-6 form-group pull-right">
-                            <label for="form-register-firstname">名</label>
-                            <input class="form-control" type="text" id="form-register-firstname" name="first_name" value="" maxlength="100" aria-describedby="help-form-register-firstname">
-                        </div>
-                        <div class="col-sm-6 form-group">
-                            <label for="form-register-lastname">姓</label>
-                            <input class="form-control" type="text" id="form-register-lastname" name="last_name" value="" maxlength="100" aria-describedby="help-form-register-lastname">
-                        </div>
-                        <div class="col-sm-12 form-group">
-                            <label for="form-register-email">Eメール</label>
-                            <input class="form-control" type="email" id="form-register-email" name="email" value="" maxlength="255" aria-describedby="help-form-register-email">
-                        </div>
-                        <div class="col-sm-6 form-group">
-                            <label for="form-register-password">
-                                パスワード						<span class="text-danger">半角英数字で8文字以上</span>
-                            </label>
-                            <input class="form-control" type="password" id="form-register-password" name="password" value="" maxlength="40" aria-describedby="help-form-register-password">
-                        </div>
-                        <div class="col-sm-6 form-group">
-                            <label for="form-register-confirm_password">パスワード（確認用）</label>
-                            <input class="form-control" type="password" id="form-register-confirm_password" name="confirm_password" value="" maxlength="40" aria-describedby="help-form-register-confirm_password">
-                        </div>
-                    </div>
-                    <div class="checkbox">
-                        <label class="active">
-                            <input type="checkbox" name="jobmail_optin" value="yes" checked="">
-                            ジョブメールの購読をします。				</label>
-                    </div>
-
-                    <div class="modal fade js-modal" tabindex="-1" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body"></div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>						<input class="btn btn-lg block-xs-12 block-sm-12 block-md-4 btn-primary mt-15" type="submit" name="" value="送信">
-                </form>
-            </div>
-        </div>
-
-        <div class="mt-30 text-center-xs text-center-sm text-left-md">
-            <h4 class="text-uppercase">フェイスブックユーザー</h4>
-            <p class="text-small">フェイスブックのアカウントでサービスを利用することもできます。</p>
-
-
-        </div>				</div>   
-    ';
-    endif;
-    return $content . $add_content;
-}
-
-//add_filter('the_content', 'func_apply');
-
 function add_search_to_menu($items, $args) {
     if ('main-menu' === $args->theme_location) {
         $items .= '<li class="search-header-wrap hidden-xs hidden-sm">';
@@ -1128,3 +726,24 @@ function cut_title($text, $len = 30) { //Hàm cắt tiêu đề Unicode
     return $text;
 }
 
+function get_taxonomies_terms($post_id, $taxonomy_slug) {
+
+    $out = array();
+
+    $terms = get_the_terms($post_id, $taxonomy_slug);
+
+    if (!empty($terms)) {
+        $out[] = "<ul class='list-inline small' id='job_type'>";
+        foreach ($terms as $term) {
+            $out[] = sprintf('<li><a href="%1$s" data-toggle="tooltip" title="Click để xem các công việc thuộc '.$term->name.'" target="_blank">%2$s</a></li>', esc_url(get_term_link($term->slug, $taxonomy_slug)), esc_html($term->name)
+            );
+        }
+        $out[] = "\n</ul>\n";
+    }
+
+    return implode('', $out);
+}
+
+function job_search ($conditions = array()) {
+    
+}

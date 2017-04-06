@@ -28,7 +28,7 @@
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
         <div id="back-to-top"><i class="fa fa-angle-up" aria-hidden="true"></i><br>PAGE<br>TOP</div>
-        <nav role="navigation" class="navbar">
+        <nav role="navigation" class="navbar header--fixed">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">

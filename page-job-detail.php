@@ -33,9 +33,9 @@
                         <p class="txt">Hãy nhập thông tin cá nhân của bạn sau khi xác nhận thông tin tuyển dụng việc làm.</p>
                     </div>
 
-                    <form id="entry_form" class="form-horizontal" action="<?php echo get_page_link(103)?>" method="post">
-                        <?php wp_nonce_field( 'job_apply_nonce', 'job_apply_nonce_field' ); ?>
-                        <input type="hidden" name="input_form[job_id]" value="<?php echo $_REQUEST['jobID']?>" />
+                    <form id="entry_form" class="form-horizontal" action="<?php echo get_page_link(103) ?>" method="post">
+                        <?php wp_nonce_field('job_apply_nonce', 'job_apply_nonce_field'); ?>
+                        <input type="hidden" name="input_form[job_id]" value="<?php echo $_REQUEST['jobID'] ?>" />
                         <div class="form-group">
                             <label for="fullname" class="col-sm-3 control-label">Tên của bạn</label>
                             <div class="col-sm-6">
@@ -108,9 +108,7 @@
                                 <select name="input_form[job_type]" id="job_type" class="form-control">
                                     <option value="" class="dropdown-select option">　</option>
                                     <option value="12" selected="selected" class="dropdown-select option">Du học sinh</option>
-                                    <option value="13" class="dropdown-select option">Ngày hội việc làm</option>
                                     <option value="01" class="dropdown-select option">Nghề tự do</option>
-                                    <option value="06" class="dropdown-select option">Học sinh THPT</option>
                                     <option value="07" class="dropdown-select option">Sinh viên đại học, cao đẳng</option>
                                     <option value="03" class="dropdown-select option">Nữ nội trợ/Nam nội trợ</option>
                                     <option value="08" class="dropdown-select option">Nhân viên công ty</option>
@@ -128,7 +126,7 @@
                                     <option value="" class="dropdown-select option" id="sel_nationality_code-0">　</option>
                                     <option value="AF" class="dropdown-select option" id="sel_nationality_code-1">Afghanistan</option>
                                     <option value="AX" class="dropdown-select option" id="sel_nationality_code-2">Aland Islands</option>
-                                    <option value="AL" selected="selected" class="dropdown-select option" id="sel_nationality_code-3">Albania</option>
+                                    <option value="AL" class="dropdown-select option" id="sel_nationality_code-3">Albania</option>
                                     <option value="DZ" class="dropdown-select option" id="sel_nationality_code-4">Algeria</option>
                                     <option value="AS" class="dropdown-select option" id="sel_nationality_code-5">American Samoa</option>
                                     <option value="AD" class="dropdown-select option" id="sel_nationality_code-6">Andorra</option>
@@ -367,7 +365,7 @@
                                     <option value="UZ" class="dropdown-select option" id="sel_nationality_code-239">Uzbekistan</option>
                                     <option value="VU" class="dropdown-select option" id="sel_nationality_code-240">Vanuatu</option>
                                     <option value="VE" class="dropdown-select option" id="sel_nationality_code-241">Venezuela, Bolivarian Republic of</option>
-                                    <option value="VN" class="dropdown-select option" id="sel_nationality_code-242">Viet Nam</option>
+                                    <option value="VN" class="dropdown-select option" id="sel_nationality_code-242" selected="">Viet Nam</option>
                                     <option value="VG" class="dropdown-select option" id="sel_nationality_code-243">Virgin Islands, British</option>
                                     <option value="VI" class="dropdown-select option" id="sel_nationality_code-244">Virgin Islands, U.S.</option>
                                     <option value="WF" class="dropdown-select option" id="sel_nationality_code-245">Wallis and Futuna</option>
@@ -401,14 +399,14 @@
                                     <option value="B">Trung cấp</option>
                                     <option value="C">Cao cấp</option>
                                 </select>
-                                <div class="explain-txt small">
-                                    <p class="ttl"><strong>Sơ cấp:</strong> trình độ sơ đẳng</p>
-                                    <p class="txt">Có thể tương tác ở một lời chào đơn giản và giới thiệu</p>
-                                    <p class="ttl"><strong>Trung cấp:</strong> trình độ giao tiếp thông thường</p>
-                                    <p class="txt">Sự kết hợp của từ trong cuộc sống hàng ngày và cuộc trò chuyện</p>
-                                    <p class="ttl"><strong>Cao cấp:</strong> trình độ tiếng Nhật thương mại</p>
-                                    <p class="txt">Lưu loát, đều thông thạo tiếng Nhật</p>
-                                </div>
+                                <dl class="dl-horizontal text-desc">
+                                    <dt><strong>Sơ cấp:</strong></dt>
+                                    <dd><ins>Trình độ sơ đẳng</ins><br />Có thể tương tác ở một lời chào đơn giản và giới thiệu</dd>
+                                    <dt><strong>Trung cấp:</strong></dt>
+                                    <dd><ins>Trình độ giao tiếp thông thường</ins><br />Sự kết hợp của từ trong cuộc sống hàng ngày và cuộc trò chuyện</dd>
+                                    <dt><strong>Cao cấp:</strong></dt>
+                                    <dd><ins>Trình độ tiếng Nhật thương mại</ins><br />Lưu loát, đều thông thạo tiếng Nhật</dd>
+                                </dl>
                             </div>
                         </div> <!-- /.form-group -->                        
                         <div class="form-group">
