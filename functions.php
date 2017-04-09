@@ -10,8 +10,22 @@ require_once(TEMPLATEPATH . '/admin/admin-interface.php');
 require_once(TEMPLATEPATH . '/admin/theme-settings.php');
 require_once(TEMPLATEPATH . '/inc/jobs-post-type.php');
 require_once(TEMPLATEPATH . '/inc/widgets_init.php');
+require_once(TEMPLATEPATH . '/inc/country.php');
+require_once(TEMPLATEPATH . '/inc/job-utility.php');
 
 define('THEME_NAME', 'baito');
+define( 'BAITO_URI', get_template_directory_uri() );
+define( 'BAITO_ADMIN_URI', BAITO_URI . '/admin' );
+
+global $countries;
+
+function job_admin_enqueue_scripts() {
+    if (get_post_type() === 'cv_job' || get_post_type() === 'job_application' ) {
+        wp_enqueue_style('cv-job', BAITO_ADMIN_URI . '/css/admin-custom.css');
+    }
+}
+
+add_filter('admin_enqueue_scripts', 'job_admin_enqueue_scripts', 10, 2);
 
 if (function_exists('add_theme_support')) {
     // Add Menu Support
@@ -749,3 +763,16 @@ add_action('init', 'add_query_args');
 function add_query_args() {
     add_query_arg('level');
 }
+
+function func_countries () {
+    global $countries;
+    $country_str = "";
+    foreach ($countries as $code => $name):
+        $selected = $code == "VN" ? "selected": "";
+        $country_str .= "<option value='{$code}' {$selected}>".$name."</option>";
+    endforeach;
+    return $country_str;
+}
+
+add_shortcode('countries', 'func_countries');
+

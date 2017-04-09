@@ -76,7 +76,7 @@ jQuery(document).ready(function ($) {
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
-                    'input_form[fullname]': {
+                    'input_form[_uv_name]': {
                         message: 'Tên không lợp lệ',
                         validators: {
                             notEmpty: {
@@ -87,37 +87,72 @@ jQuery(document).ready(function ($) {
                                 max: 30,
                                 message: 'Tên phải ít nhất là 3 ký tự'
                             },
-                            /*remote: {
-                             url: 'remote.php',
-                             message: 'The username is not available'
-                             },*/
-                            regexp: {
-                                regexp: /^[a-zA-Z0-9_\.]+$/,
-                                message: 'Tên không hợp lệ'
-                            }
+//                            regexp: {
+//                                regexp: /^[a-zA-Z0-9_\.]+$/,
+//                                message: 'Tên không hợp lệ'
+//                            }
                         }
                     },
-                    'input_form[email]': {
+                    'input_form[_email]': {
                         validators: {
                             notEmpty: {
-                                message: 'Email không được để trống'
+                                message: 'Không được để trống'
                             },
                             emailAddress: {
                                 message: 'Email không đúng định dạng'
+                            },
+                            remote: {
+                                url: 'is-exist-apply/',
+                                message: 'Email đã đăng ký công việc này',
+                                type: 'POST',
+                                data: {
+                                    job_id: $('#job-id').val()
+                                }
                             }
                         }
                     },
-                    'input_form[telephone_number]': {
+                    'input_form[birth_year]': {
                         validators: {
                             notEmpty: {
-                                message: 'Hãy nhập vào số điện thoại'
+                                message: 'Không được để trống'
                             }
                         }
                     },
-                    'input_form[address]': {
+                    'input_form[birth_month]': {
                         validators: {
                             notEmpty: {
-                                message: 'Hãy nhập vào địa chỉ của bạn'
+                                message: 'Không được để trống'
+                            }
+                        }
+                    },
+                    'input_form[birth_day]': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Không được để trống'
+                            }
+                        }
+                    },
+                    'input_form[_tel]': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Không được để trống'
+                            },
+                            digits: {
+                                message: 'Số điện thoại không hợp lệ'
+                            }
+                        }
+                    },
+                    'input_form[_address]': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Không được để trống'
+                            }
+                        }
+                    },
+                    'input_form[_jlpt_level]': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Không được để trống'
                             }
                         }
                     }
@@ -131,4 +166,8 @@ jQuery(document).ready(function ($) {
             "unpinned": "slideUp"
         }
     });
+    $('#back_button').on('click', function() {
+        $('#entry_form').attr('action', '/' + '/job-detail/?jobID=114').submit();
+    });
+    
 });

@@ -361,6 +361,12 @@ nav.navbar {
     outline: none;
     padding: 0 10px 0 20px;
 }
+.form-horizontal .has-feedback .form-control-feedback {
+    padding-top: 5px;
+}
+.label-required {
+    color: #d9534f;
+}
 /*------------------------------------*\
     TOP PAGE CATEGORY 
 \*------------------------------------*/

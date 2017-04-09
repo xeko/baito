@@ -1,0 +1,20 @@
+.job-application-status {
+    background-color: #a3a3a3;
+    border-radius: 2px;
+    color: #fff;
+    font-size: 11px;
+    padding: 4px;
+    text-align: center;
+}
+.job-application-status-Rejected{
+	background:#a3a3a3;
+}
+.job-application-status-Pending{
+	background:#e6b706;
+}
+.job-application-status-Approved{
+	background:#ee5b4c;
+}
+.widefat th#status {
+    width: 80px;
+}

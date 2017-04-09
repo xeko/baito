@@ -270,7 +270,7 @@ function job_application() {
         'label' => __('sproduct', 'baito'),
         'description' => __('Quản lý người dùng đăng ký công việc', 'baito'),
         'labels' => $labels,
-        'supports' => array('title', 'editor'),
+        'supports' => array('title'),
         'public' => true,
         'show_ui' => true,
         'show_in_menu' => true,
@@ -296,39 +296,69 @@ $meta_box_uv = array(
     'context' => 'normal',
     'priority' => 'high',
     'fields' => array(
+        array('id' => '_uv_name', 'label' => __('Họ tên', 'baito'), 'type' => 'label'),
         array('id' => '_gender', 'label' => __('Giới tính', 'baito'), 'type' => 'label'),
-        array('id' => '_birthdate', 'label' => __('Ngày sinh', 'baito'), 'type' => 'label'),
-        array('id' => '_tel', 'label' => __('Điện thoại', 'baito'), 'type' => 'label'),
-        array('id' => '_email', 'label' => __('Email', 'baito'), 'type' => 'label'),
+        array('id' => '_birthdate', 'label' => __('Ngày sinh', 'baito'), 'type' => 'birthday'),
+        array('id' => '_tel', 'label' => __('Điện thoại', 'baito'), 'type' => 'tel'),
+        array('id' => '_email', 'label' => __('Email', 'baito'), 'type' => 'email'),
         array('id' => '_address', 'label' => __('Địa chỉ', 'baito'), 'type' => 'label'),
         array('id' => '_employer', 'label' => __('Nghề nghiệp', 'baito'), 'type' => 'label'),
         array('id' => '_country', 'label' => __('Quốc tịch', 'baito'), 'type' => 'label'),
-        array('id' => '_jlpt_level', 'label' => __('Trình độ tiếng Nhật / JLPT', 'baito'), 'type' => 'label'),
+        array('id' => '_jlpt_level', 'label' => __('Trình độ tiếng Nhật', 'baito'), 'type' => 'label'),
         array('id' => '_about_me', 'label' => __('Giới thiệu bản thân', 'baito'), 'type' => 'label'),
+    )
+);
+$meta_box_history_uv = array(
+    'id' => "uv_history_settings",
+    'title' => __('Quá khứ của ứng viên', 'baito'),
+    'page' => 'job_application',
+    'context' => 'normal',
+    'priority' => 'high',
+    'fields' => array(
+        array('id' => '_job_id', 'label' => __('Công việc đăng ký', 'baito'), 'type' => 'label'),
+    )
+);
+
+$meta_box__job_apply_confirm = array(
+    'id' => "job_apply_confirm",
+    'title' => __('Xác nhận thông tin', 'baito'),
+    'page' => 'job_application',
+    'context' => 'side',
+    'priority' => 'high',
+    'fields' => array(
+        array('id' => '_job_apply_confirm', 'label' => __('Trạng thái', 'baito'), 'type' => 'select', 'options' => get_application_status()),
     )
 );
 
 function uv_add_box() {
-    global $meta_box_uv;
+    global $meta_box_uv, $meta_box_history_uv, $meta_box__job_apply_confirm;
     add_meta_box($meta_box_uv['id'], $meta_box_uv['title'], 'uv_show_box', 'job_application', $meta_box_uv['context'], $meta_box_uv['priority']);
+    add_meta_box($meta_box_history_uv['id'], $meta_box_history_uv['title'], 'uv_show_history_box', 'job_application', $meta_box_history_uv['context'], $meta_box_history_uv['priority']);
+    add_meta_box($meta_box__job_apply_confirm['id'], $meta_box__job_apply_confirm['title'], 'job_apply_status', $meta_box__job_apply_confirm['page'], $meta_box__job_apply_confirm['context'], $meta_box__job_apply_confirm['priority']);
 }
 
 add_action('admin_menu', 'uv_add_box');
 
 function uv_show_box() {
-    global $meta_box_uv, $post;
+    global $meta_box_uv, $post, $countries, $employer_list, $jlpt_list;
 
+    $post_info = get_post($post->ID);
+    $job_id = $post_info->post_parent;
     // Use nonce for verification
     echo '<input type="hidden" name="uv_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
 
     echo '<table class="form-table">';
+    echo '<tr>'
+    . '<th style="width:20%"><label>Công việc đăng ký</label></th>';
 
+    echo '<td><a href="' . get_the_permalink($job_id) . '">' . get_the_title($job_id) . '</a></td>';
+    echo '</tr>';
     foreach ($meta_box_uv['fields'] as $field) {
         // get current post meta data
         $meta = get_post_meta($post->ID, $field['id'], true);
 
         echo '<tr>',
-        '<th style="width:20%"><label for="', $field['id'], '">', $field['label'], '</label></th>',
+        '<th><label for="', $field['id'], '">', $field['label'], '</label></th>',
         '<td>';
         switch ($field['type']) {
             case 'text':
@@ -363,6 +393,25 @@ function uv_show_box() {
                 }
                 echo '</div>';
                 break;
+            case 'label':
+                if ($field['id'] == "_country")
+                    echo $countries[$meta];
+                elseif ($field['id'] == "_employer") {
+                    echo $employer_list[$meta];
+                } elseif ($field['id'] == "_jlpt_level") {
+                    echo $jlpt_list[$meta];
+                } else
+                    echo $meta;
+                break;
+            case 'tel':
+                echo '<a href="tel:' . $meta . '">' . $meta . '</a>';
+                break;
+            case 'email':
+                echo '<a href="mailto:' . $meta . '">' . $meta . '</a>';
+                break;
+            case 'birthday':
+                echo get_post_meta($post->ID, 'birth_year', true) . '/' . get_post_meta($post->ID, 'birth_month', true) . '/' . get_post_meta($post->ID, 'birth_day', true);
+                break;
             default:
                 echo htmlspecialchars($meta) ? htmlspecialchars($meta) : htmlspecialchars($field['std']);
                 break;
@@ -375,6 +424,69 @@ function uv_show_box() {
 }
 
 /**
+ * Lấy lịch sử của ứng viên đã apply vào các công việc trước đây
+ */
+function uv_show_history_box() {
+    
+}
+
+/**
+ * Button xác nhận trạng thái của ứng viên apply công việc
+ */
+function job_apply_status() {
+    global $meta_box__job_apply_confirm, $post;
+
+    $field = $meta_box__job_apply_confirm['fields'][0];
+    $meta = get_post_meta($post->ID, $field['id'], true);
+
+    // Use nonce for verification
+    echo '<input type="hidden" name="job_apply_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
+    
+    echo '<select name="', $field['id'], '" id="', $field['id'], '">';
+    foreach ($field['options'] as $option) {
+        echo '<option', $meta == $option ? ' selected="selected"' : '', '>', $option, '</option>';
+    }
+    echo '</select>';
+}
+
+// Update trạng thái của ứng viên sau khi duyệt hồ sơ đăng ký
+function job_apply_save_status($post_id) {
+    global $meta_box__job_apply_confirm;
+
+    // verify nonce
+    if (!wp_verify_nonce($_POST['job_apply_nonce'], basename(__FILE__))) {
+        return $post_id;
+    }
+
+    // check autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return $post_id;
+    }
+
+    // check permissions
+    if ('job_application' == $_POST['post_type']) {
+        if (!current_user_can('edit_page', $post_id)) {
+            return $post_id;
+        }
+    } elseif (!current_user_can('edit_post', $post_id)) {
+        return $post_id;
+    }
+
+    foreach ($meta_box__job_apply_confirm['fields'] as $field) {
+        $old = get_post_meta($post_id, $field['id'], true);
+        $new = $_POST[$field['id']];
+
+        if ($new && $new != $old) {
+            update_post_meta($post_id, $field['id'], $new);
+        } elseif ('' == $new && $old) {
+            delete_post_meta($post_id, $field['id'], $old);
+        }
+    }
+}
+
+add_action('save_post', 'job_apply_save_status');
+
+/**
  * Add row in post type job application
  */
 add_filter('manage_edit-job_application_columns', 'job_application_edit_post_columns');
@@ -384,7 +496,7 @@ function job_application_edit_post_columns($columns) {
     $columns = array(
         'cb' => '<input type="checkbox" />',
         'status' => 'Status',
-        'title' => 'Ứng viên',
+        '_uv_name' => 'Ứng viên',
         'job_name' => 'Công việc',
         'date' => __('Thời gian')
     );
@@ -395,9 +507,27 @@ function job_application_edit_post_columns($columns) {
 add_action('manage_posts_custom_column', 'job_application_manage_post_columns', 10, 2);
 
 function job_application_manage_post_columns($column, $post_id) {
-
+    global $post;
     switch ($column) {
 
+        case 'status':
+            $status = get_post_meta($post->ID, '_job_apply_confirm', true);            
+            echo '<span class="job-application-status job-application-status-' . sanitize_html_class($status) . '">';
+            echo esc_html($status);
+            echo '</span>';
+            break;
+        case 'job_name':
+            $job = get_post($post->post_parent);
+
+            if ($job && $job->post_type === 'cv_job') {
+                echo '<a href="' . get_permalink($job->ID) . '">' . $job->post_title . '</a>';
+            } else {
+                echo '<span class="na">&ndash;</span>';
+            }
+            break;
+        case '_uv_name':
+            echo '<a href="' . get_edit_post_link($post->ID) . '">' . get_post_meta($post->ID, '_uv_name', true) . '</a>';
+            break;
         default :
             break;
     }
@@ -413,7 +543,8 @@ function cv_job_edit_post_columns($columns) {
     $columns = array(
         'cb' => '<input type="checkbox" />',
         'title' => 'Title',
-        'apply_number' => 'Application',
+        'job_category' => 'Category',
+        'apply_number' => 'Apply',
         'job_status' => 'Status',
         'job_view' => 'Views',
         'author' => __('Author'),
@@ -426,16 +557,27 @@ function cv_job_edit_post_columns($columns) {
 add_action('manage_posts_custom_column', 'cv_job_manage_post_columns', 10, 2);
 
 function cv_job_manage_post_columns($column, $post_id) {
-    global $wpdb;
+    global $post, $wpdb;
     switch ($column) {
         case 'apply_number':
-            $apply_count = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type = 'cv_job' AND post_parent = {$post_id->ID}");
+            $apply_count = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type = 'job_application' AND post_parent = {$post->ID}");
             if ($apply_count > 0) {
-                $url_args = array('s' => '', 'post_status' => 'all', 'post_type' => 'job_application', 'job' => $post_id->ID, 'action' => -1, 'action2' => -1);
-                $application_link = esc_url(add_query_arg($url_args, admin_url('edit.php')));
-                echo '<strong><a href="' . $application_link . '">' . $application_count . '</a></strong>';
+                $url_args = array('s' => '', 'post_status' => 'all', 'post_type' => 'job_application', 'job' => $post->ID, 'action' => -1, 'action2' => -1);
+                $apply_link = esc_url(add_query_arg($url_args, admin_url('edit.php')));
+                echo '<strong><a href="' . $apply_link . '">' . $apply_count . '</a></strong>';
             } else {
                 echo '-';
+            }
+            break;
+        case 'job_category':
+            if (!$terms = get_the_terms($post->ID, $column)) {
+                echo '<span class="na">&ndash;</span>';
+            } else {
+                $terms_edit = array();
+                foreach ($terms as $term) {
+                    $terms_edit[] = edit_term_link($term->name, '', '', $term, false);
+                }
+                echo implode(', ', $terms_edit);
             }
             break;
         case 'job_view':
@@ -555,3 +697,60 @@ function shortcode_top_views($params) {
 }
 
 add_shortcode('top_views', 'shortcode_top_views');
+
+/**
+ * THêm bộ lọc cho post type
+ * @global type $typenow
+ * @return type
+ */
+function job_application_filter() {
+    global $typenow, $wp_query, $wpdb;
+
+    if ('job_application' != $typenow) {
+        return;
+    }
+    ?>
+    <select id="dropdown_job_apply" name="job">
+        <option value=""><?php _e('All jobs', 'baito') ?></option>
+        <?php
+        $jobs_with_applications = $wpdb->get_col("SELECT DISTINCT post_parent FROM {$wpdb->posts} WHERE post_type = 'job_application'");
+        $current = isset($_GET['job']) ? $_GET['job'] : 0;
+        foreach ($jobs_with_applications as $job_id) {
+            if (( $title = get_the_title($job_id) ) && $job_id) {
+                echo '<option value="' . $job_id . '" ' . selected($current, $job_id, false) . '">' . $title . '</option>';
+            }
+        }
+        ?>
+    </select>   
+    <?php
+}
+
+add_action('restrict_manage_posts', 'job_application_filter');
+
+function job_apply_data_filter($query) {
+    global $pagenow;
+    $type = 'post';
+    if (isset($_GET['post_type'])) {
+        $type = $_GET['post_type'];
+    }
+    if ('job_application' == $type && is_admin() && $pagenow == 'edit.php') {
+        if (!isset($query->query_vars['post_type']) || $query->query_vars['post_type'] == 'job_application') {
+            if (isset($_GET['job']) && $_GET['job'] != '') {
+                $job_id = $_GET['job'];
+
+                $query->query_vars['post_parent'] = $job_id;
+            }
+        }
+    }
+}
+
+add_filter('parse_query', 'job_apply_data_filter');
+
+function get_application_status() {
+    return apply_filters('cv_application_status', array(
+        'rejected' => __('Rejected', 'baito'),
+        'pending' => __('Pending', 'baito'),
+        'publish' => __('Approved', 'baito'),
+        'inactive' => __('Inactive', 'baito'),
+    ));
+}
