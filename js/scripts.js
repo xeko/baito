@@ -170,4 +170,31 @@ jQuery(document).ready(function ($) {
         $('#entry_form').attr('action', '/' + '/job-detail/?jobID=114').submit();
     });
     
+    //Submit form Q&A
+    
+    $("#frmQA").on("submit", function(e) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(data, textStatus, jqXHR) {
+                $('#modal_qa .modal-body').html(data);
+                $("#submitQA").remove();
+            },
+            error: function(jqXHR, status, error) {
+                console.log(status + ": " + error);
+            }
+        });
+        e.preventDefault();
+    });
+     
+    $("#submitQA").on('click', function() {
+        $("#frmQA").submit();
+    });
+    $("#closedQA").on('click', function() {
+        $("#wrapper").load('http://localhost/arubaito/').fadeIn("slow");
+    });
+    
 });

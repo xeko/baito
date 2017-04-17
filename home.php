@@ -34,7 +34,7 @@
                 <h5 class="text-uppercase">TÌM VIỆC LÀM PHÙ HỢP</h5>
             </div>
             <div class="ibox-content">
-                <form name="search" id="frm_block_quick_search" action="<?php echo esc_url( home_url( '/' ) );?>" method="get">
+                <form name="search" id="frm_block_quick_search" action="<?php echo esc_url(home_url('/')); ?>" method="get">
                     <input type="hidden" name="post_type" value="cv_job" />
                     <div class="row">
                         <div class="col-sm-9">
@@ -76,7 +76,7 @@
                                 foreach ($job_category as $term) {
                                     if ($term->parent == 0) {
 //                                        if ($i++ != 0)
-                                            echo '</optgroup>';
+                                        echo '</optgroup>';
                                         echo '<optgroup label="' . $term->name . '">';
                                         $id = $term->term_id;
                                         $args = array("child_of" => $id, 'hide_empty' => 0);
@@ -268,7 +268,51 @@
         </div>
     </div><!--End .container-->
 </section><!--End .bg-gray-->
-
+<div class="container">
+    <div class="row">
+        <div class="ibox box-level shadow text-center">
+            <div class="ibox-title">
+                <h5 class="text-uppercase text-left">Hỏi đáp, chia sẽ kinh nghiệm</h5>
+            </div>
+            <ul class="level clearfix">
+                <li class="col-sm-4 col-xs-6">
+                    <a href="#" class="text-uppercase text-center icon-square"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Q&A</a>
+                    <span class="text-uppercase">Các câu hỏi từ các bạn</span>
+                </li>
+                <li class="col-sm-4 col-xs-6">
+                    <a href="#" target="_blank" class="text-uppercase text-center icon-square"><i class="fa fa-commenting-o" aria-hidden="true"></i>FAQ</a>
+                    <span class="text-uppercase">Các vấn đề liên quan tới dhs, tns</span>
+                </li>                
+            </ul><!--End .level-->
+        </div><!--End .row-->
+    </div>
+</div>
+<div id="modal_qa" class="modal fade">
+    <div class="modal-dialog">        
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Hỏi đáp</h4>
+                </div>
+                <div class="modal-body">                
+                    <form action="<?php echo get_page_link(180)?>" method="post" id="frmQA" name="frmQA">
+                    <input type="hidden" name="baito_qa_name" value="e6e86e77e3a32b225f06d29d599d9cdf">
+                    <select class="form-control" name="qa-type">
+                        <option value="0">Chọn loại câu hỏi</option>
+                        <option value="8">FAQ chuẩn bị du học</option>
+                        <option value="7">Thông tin kỳ thi</option>
+                    </select>
+                    <input name="qa-title" type="text" placeholder="Chủ đề" class="form-control">
+                    <textarea name="qa-content" rows="5" placeholder="Nội dung cần tư vấn" class="form-control"></textarea>                
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="closedQA">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="submitQA">Gửi</button>
+                </div>
+            </div>        
+    </div>
+</div><!--End #qa-modal-->
 <?php
 get_footer();
 

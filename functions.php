@@ -12,6 +12,8 @@ require_once(TEMPLATEPATH . '/inc/jobs-post-type.php');
 require_once(TEMPLATEPATH . '/inc/widgets_init.php');
 require_once(TEMPLATEPATH . '/inc/country.php');
 require_once(TEMPLATEPATH . '/inc/job-utility.php');
+require_once(TEMPLATEPATH . '/inc/post_type-faq.php');
+require_once(TEMPLATEPATH . '/inc/post_type-qa.php');
 
 define('THEME_NAME', 'baito');
 define( 'BAITO_URI', get_template_directory_uri() );
@@ -776,3 +778,14 @@ function func_countries () {
 
 add_shortcode('countries', 'func_countries');
 
+    add_filter( 'nav_menu_link_attributes', 'toggle_menu_atts', 10, 3 );
+function toggle_menu_atts( $atts, $item, $args )
+{
+  $menu_target = 179;
+ 
+  if ($item->ID == $menu_target) {
+    $atts['data-toggle'] = 'modal';
+    $atts['data-target'] = '#modal_qa';
+  }
+  return $atts;
+}

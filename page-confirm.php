@@ -117,7 +117,7 @@
                             <?php wp_nonce_field('submit_token'); ?>
                             <div class="btn-group btn-group-justified">
                                 <div class="btn-group btn-group-lg">
-                                    <input id="back_button" class="btn-back btn" type="button" name="submit" value="Sửa thông tin">
+                                    <input id="back_button" class="btn-back btn" type="button" name="modify" value="Sửa thông tin" onclick="window.history.back();">
                                 </div>
                                 <div class="btn-group btn-group-lg">
                                     <input id="entry_button" class="btn-send btn" type="submit" name="submit" value="Ứng tuyển">
