@@ -56,7 +56,7 @@ function qa_category() {
     );
 }
 
-$meta_box = array(
+$meta_box_qa = array(
     'id' => "baito_qa",
     'title' => __('Box Q&A', 'baito'),
     'page' => 'qa',
@@ -69,21 +69,21 @@ $meta_box = array(
 );
 
 function baito_add_box_qa() {
-    global $meta_box;
-    add_meta_box($meta_box['id'], $meta_box['title'], 'baito_metabox_qa', $meta_box['page'], $meta_box['context'], $meta_box['priority']);
+    global $meta_box_qa;
+    add_meta_box($meta_box_qa['id'], $meta_box_qa['title'], 'baito_metabox_qa', $meta_box_qa['page'], $meta_box_qa['context'], $meta_box_qa['priority']);
 }
 
 add_action('admin_menu', 'baito_add_box_qa');
 
 function baito_metabox_qa() {
-    global $meta_box, $post;
+    global $meta_box_qa, $post;
 
     // Use nonce for verification
     echo '<input type="hidden" name="metabox_qa_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
 
     echo '<table class="form-table">';
 
-    foreach ($meta_box['fields'] as $field) {
+    foreach ($meta_box_qa['fields'] as $field) {
         // get current post meta data
         $meta = get_post_meta($post->ID, $field['id'], true);
 
@@ -115,7 +115,7 @@ function baito_metabox_qa() {
 
 // Save data from meta box
 function meta_qa_save_data($post_id) {
-    global $meta_box;
+    global $meta_box_qa;
 
     // verify nonce
     if (!wp_verify_nonce($_POST['metabox_qa_nonce'], basename(__FILE__))) {
@@ -136,7 +136,7 @@ function meta_qa_save_data($post_id) {
         return $post_id;
     }
 
-    foreach ($meta_box['fields'] as $field) {
+    foreach ($meta_box_qa['fields'] as $field) {
         $old = get_post_meta($post_id, $field['id'], true);
         $new = $_POST[$field['id']];
 

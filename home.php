@@ -298,10 +298,17 @@
                     <form action="<?php echo get_page_link(180)?>" method="post" id="frmQA" name="frmQA">
                     <input type="hidden" name="baito_qa_name" value="e6e86e77e3a32b225f06d29d599d9cdf">
                     <select class="form-control" name="qa-type">
-                        <option value="0">Chọn loại câu hỏi</option>
-                        <option value="8">FAQ chuẩn bị du học</option>
-                        <option value="7">Thông tin kỳ thi</option>
-                    </select>
+                        <option value>Chọn danh mục</option>
+                    <?php 
+                    $taxonomy_qa = get_custom_taxonomy("category_qa");
+                    
+                    if(!empty($taxonomy_qa)):
+                        foreach ($taxonomy_qa as $k_qa => $v_qa):?>
+                        <option value="<?php echo $k_qa?>"><?php echo $v_qa?></option>
+                        <?php endforeach;
+                    endif;
+                    ?>
+                    </select>                                            
                     <input name="qa-title" type="text" placeholder="Chủ đề" class="form-control">
                     <textarea name="qa-content" rows="5" placeholder="Nội dung cần tư vấn" class="form-control"></textarea>                
                     </form>

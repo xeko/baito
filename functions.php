@@ -16,13 +16,13 @@ require_once(TEMPLATEPATH . '/inc/post_type-faq.php');
 require_once(TEMPLATEPATH . '/inc/post_type-qa.php');
 
 define('THEME_NAME', 'baito');
-define( 'BAITO_URI', get_template_directory_uri() );
-define( 'BAITO_ADMIN_URI', BAITO_URI . '/admin' );
+define('BAITO_URI', get_template_directory_uri());
+define('BAITO_ADMIN_URI', BAITO_URI . '/admin');
 
 global $countries;
 
 function job_admin_enqueue_scripts() {
-    if (get_post_type() === 'cv_job' || get_post_type() === 'job_application' ) {
+    if (get_post_type() === 'cv_job' || get_post_type() === 'job_application') {
         wp_enqueue_style('cv-job', BAITO_ADMIN_URI . '/css/admin-custom.css');
     }
 }
@@ -766,26 +766,37 @@ function add_query_args() {
     add_query_arg('level');
 }
 
-function func_countries () {
+function func_countries() {
     global $countries;
     $country_str = "";
     foreach ($countries as $code => $name):
-        $selected = $code == "VN" ? "selected": "";
-        $country_str .= "<option value='{$code}' {$selected}>".$name."</option>";
+        $selected = $code == "VN" ? "selected" : "";
+        $country_str .= "<option value='{$code}' {$selected}>" . $name . "</option>";
     endforeach;
     return $country_str;
 }
 
 add_shortcode('countries', 'func_countries');
 
-    add_filter( 'nav_menu_link_attributes', 'toggle_menu_atts', 10, 3 );
-function toggle_menu_atts( $atts, $item, $args )
-{
-  $menu_target = 179;
- 
-  if ($item->ID == $menu_target) {
-    $atts['data-toggle'] = 'modal';
-    $atts['data-target'] = '#modal_qa';
-  }
-  return $atts;
+add_filter('nav_menu_link_attributes', 'toggle_menu_atts', 10, 3);
+
+function toggle_menu_atts($atts, $item, $args) {
+    $menu_target = 179;
+
+    if ($item->ID == $menu_target) {
+        $atts['data-toggle'] = 'modal';
+        $atts['data-target'] = '#modal_qa';
+    }
+    return $atts;
+}
+
+function get_custom_taxonomy($name = "") {
+    $terms = get_terms($name, array('hide_empty' => FALSE));
+    $data = array();
+    if (!empty($terms) && !is_wp_error($terms)) {        
+        foreach ($terms as $term) {
+            $data[$term->slug] = $term->name;           
+        }
+    }
+    return $data;
 }
