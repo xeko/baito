@@ -5,7 +5,7 @@ Development on WordPress.
 * Project: [https://github.com/xeko/baito](https://github.com/xeko/baito)
 * Website: [dentalservice.jp](http://dentalservice.jp)
 * Facebook: [@hoaitvn](http://facebook.com/hoaitvn)
-* Author : [TongHoa](http://tdentalservice.jp)
+* Author : [TongHoa](http://dentalservice.jp)
 * Email : [hoaitvn@gmail.com]
 
 Download the latest version from [html5blank.com](http://html5blank.com)
