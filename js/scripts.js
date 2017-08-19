@@ -1,14 +1,27 @@
 jQuery(document).ready(function ($) {
     //back to top
+    var showFlag = false;
+    var topBtn = $('#back-to-top');    
+    topBtn.css('bottom', '-100px');
+    var showFlag = false;
     $(window).scroll(function () {
-        if ($(window).scrollTop() < 300) {
-            $('#back-to-top').fadeOut();
+        if ($(this).scrollTop() > 100) {
+            if (showFlag === false) {
+                showFlag = true;
+                topBtn.stop().animate({'bottom' : '20px'}, 500); 
+            }
         } else {
-            $('#back-to-top').fadeIn();
+            if (showFlag) {
+                showFlag = false;
+                topBtn.stop().animate({'bottom' : '-100px'}, 500); 
+            }
         }
     });
-    $("#back-to-top").on("click", function () {
-        $("html, body").animate({scrollTop: 0}, 800);
+    topBtn.click(function () {
+        $('body,html').animate({
+            scrollTop: 0
+        }, 500);
+        return false;
     });
     $('.dropdown').hover(
             function () {
@@ -54,14 +67,18 @@ jQuery(document).ready(function ($) {
     }).on('mouseleave', '#search-icon, #search-icon-desk', function () {
         isSearchHover = false;
     });
-    //Chosen
+    
+    //Chon den tim kiem
+    $("#timeWorks").chosen({
+        placeholder_text_multiple: "Chọn thời gian"
+    });
     $("#cateList").chosen({
         placeholder_text_multiple: "Chọn ngành nghề",
         max_selected_options: 3
     });
     $("#location").chosen({
-        placeholder_text_multiple: "Chọn địa điểm",
-    });
+        placeholder_text_multiple: "Chọn địa điểm"
+    });    
 
     $('.item').matchHeight();
 
@@ -158,6 +175,40 @@ jQuery(document).ready(function ($) {
                     }
                 }
             });
+
+//    $('form[name="frmQA"]')
+//            .bootstrapValidator({
+//                message: 'This value is not valid',
+//                feedbackIcons: {
+//                    valid: 'glyphicon glyphicon-ok',
+//                    invalid: 'glyphicon glyphicon-remove',
+//                    validating: 'glyphicon glyphicon-refresh'
+//                },
+//                fields: {
+//                    'qa_type': {
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'Hãy chọn danh mục câu hỏi'
+//                            }
+//                        }
+//                    },
+//                    'qa_title': {
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'Không được để trống'
+//                            }
+//                        }
+//                    },
+//                    'qa_content': {
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'Không được để trống'
+//                            }
+//                        }
+//                    }
+//                }
+//            });
+
     $('nav').headroom({
         "offset": 200,
         "classes": {
@@ -166,35 +217,35 @@ jQuery(document).ready(function ($) {
             "unpinned": "slideUp"
         }
     });
-    $('#back_button').on('click', function() {
+    $('#back_button').on('click', function () {
         $('#entry_form').attr('action', '/' + '/job-detail/?jobID=114').submit();
     });
-    
+
     //Submit form Q&A
-    
-    $("#frmQA").on("submit", function(e) {
+
+    $("#frmQA").on("submit", function (e) {
         var postData = $(this).serializeArray();
         var formURL = $(this).attr("action");
         $.ajax({
             url: formURL,
             type: "POST",
             data: postData,
-            success: function(data, textStatus, jqXHR) {
+            success: function (data, textStatus, jqXHR) {
                 $('#modal_qa .modal-body').html(data);
                 $("#submitQA").remove();
             },
-            error: function(jqXHR, status, error) {
+            error: function (jqXHR, status, error) {
                 console.log(status + ": " + error);
             }
         });
         e.preventDefault();
     });
-     
-    $("#submitQA").on('click', function() {
+
+    $("#submitQA").on('click', function () {
         $("#frmQA").submit();
     });
-    $("#closedQA").on('click', function() {
+    $("#closedQA").on('click', function () {
         $("#wrapper").load('http://localhost/arubaito/').fadeIn("slow");
     });
-    
+
 });

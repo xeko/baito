@@ -32,7 +32,7 @@
                         <h1 class="title-job">Ứng tuyển việc làm</h1>
                         <p class="txt">Hãy nhập thông tin cá nhân của bạn sau khi xác nhận thông tin tuyển dụng việc làm.</p>                    
 
-                        <form id="entry_form" class="form-horizontal" action="<?php echo get_page_link(103) ?>" method="post">
+                        <form id="entry_form" class="form-horizontal" action="<?php echo get_page_link(18) ?>" method="post">
                             <?php wp_nonce_field('job_apply_nonce', 'job_apply_nonce_field'); ?>
                             <input type="hidden" name="input_form[job_id]" id="job-id" value="<?php echo $_REQUEST['jobID'] ?>" />
                             <div class="form-group">

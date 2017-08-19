@@ -2,15 +2,15 @@
 <?php
 
 $qa_data = array(
-    'post_title' => $_POST['qa-title'],
+    'post_title' => $_POST['qa_title'],
     'post_type' => 'qa',
     'post_status' => 'publish'
 );
 
-if (isset($_POST['qa-content']) && trim($_POST['qa-content']) != "")
-    $qa_answer = $_POST['qa-content'];
-if (isset($_POST['qa-type']) && trim($_POST['qa-type']) != "")
-    $qa_type = $_POST['qa-type'];
+if (isset($_POST['qa_content']) && trim($_POST['qa_content']) != "")
+    $qa_answer = $_POST['qa_content'];
+if (isset($_POST['qa_type']) && trim($_POST['qa_type']) != "")
+    $qa_type = $_POST['qa_type'];
 
 $qa_info = wp_insert_post($qa_data);
 

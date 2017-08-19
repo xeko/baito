@@ -2,7 +2,8 @@
 
 /*Popular Posts by Views*/
 function wp_set_post_views($postID) {
-    $count_key = 'tanaka_post_views_count';
+    global $count_key;
+    $count_key = 'baito_views_count';
     $count = get_post_meta($postID, $count_key, true);
     if($count==''){
         $count = 0;
@@ -25,7 +26,8 @@ function wp_track_post_views ($post_id) {
 add_action( 'wp_head', 'wp_track_post_views');
 
 function wp_get_post_views($postID){
-    $count_key = 'tanaka_post_views_count';
+    global $count_key;
+    
     $count = get_post_meta($postID, $count_key, true);
     if($count==''){
         delete_post_meta($postID, $count_key);
@@ -38,14 +40,14 @@ function wp_get_post_views($postID){
 
 //Function: Gets the number of Post Views to be used later.
 function get_PostViews($post_ID){
-    $count_key = 'tanaka_post_views_count';
+    global $count_key;
     $count = get_post_meta($post_ID, $count_key, true);
     $count = empty($count) ? 0: $count;
     return $count;
 }
 //Function: Add/Register the Non-sortable 'Views' Column to your Posts tab in WP Dashboard.
 function post_column_views($newcolumn){
-    //Retrieves the translated string, if translation exists, and assign it to the 'default' array.
+    
     $newcolumn['post_views'] = __('Views');
     return $newcolumn;
 }
@@ -66,9 +68,10 @@ add_filter( 'manage_edit-post_sortable_columns', 'register_post_column_views_sor
  
 function sort_views_column( $vars ) 
 {
+    global $count_key;
     if ( isset( $vars['orderby'] ) && 'post_views' == $vars['orderby'] ) {
         $vars = array_merge( $vars, array(
-            'meta_key' => 'tanaka_post_views_count',
+            'meta_key' => $count_key,
             'orderby' => 'meta_value_num')
         );
     }
@@ -77,13 +80,14 @@ function sort_views_column( $vars )
 add_filter( 'request', 'sort_views_column' );
 
 function top_views($params) {
+    global $count_key;
     $display = isset($params['num']) ? (int) $params['num'] : 5;
     
     $conditions = array( 
         'post_type' => array('post'),
         'posts_per_page' => $display,         
         'post_status' => 'publish',
-        'meta_key' => 'tanaka_post_views_count', 
+        'meta_key' => $count_key, 
         'orderby' => 'meta_value_num', 
         'order' => 'DESC'  
     );    
@@ -93,7 +97,7 @@ function top_views($params) {
     $return_str .= '<ul id="top-view" class="list-unstyled">';
     $query = new WP_query($conditions);
     if ($query->have_posts()): while ($query->have_posts()): $query->the_post();            
-        $count = get_post_meta(get_the_ID(), 'tanaka_post_views_count', true);
+        $count = get_post_meta(get_the_ID(), $count_key, true);
         $return_str .= '<li>
             <a href="' . get_permalink(get_the_ID()) . '" title="' . get_the_title() . '" class="zoom-effect">
             <figure class="eyecatch">' . get_the_post_thumbnail(get_the_ID(), array(80, 80), array('class' => 'pull-left')) .'</figure>'. get_the_title() . '

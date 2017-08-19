@@ -38,58 +38,50 @@
                     <input type="hidden" name="post_type" value="cv_job" />
                     <div class="row">
                         <div class="col-sm-9">
-                            <div class="mb10 col-sm-12">
-                                <input id="keyword" class="form-control search-all" name="s" placeholder="" >
-                            </div>
-                            <div class="mb10 col-sm-6">
-                                <select data-placeholder="japanese level" class="form-control" id="japaneseLevelMainSearch" name="jp_level" tabindex="-1">
-                                    <option value="0">Tất cả trình độ</option>
-                                    <option value="1">Beginner</option>
-                                    <option value="2">N3</option>
-                                    <option value="3">N2</option>
-                                    <option value="4">N1</option>
-                                </select>
-                            </div>
-
-                            <div class="mb10 col-sm-6">
-                                <div class="textbox">
-                                    <select data-placeholder="salary" id="salaryMainSearch" name="salary_level" style="width: 100%;" class="form-control">
-                                        <option value="0">Tất cả mức lương</option>
-                                        <option value="1">&lt;$500</option>                                
+                            <div class="row">
+                                <div class="mb10 col-sm-12">
+                                    <input id="keyword" class="form-control search-all" name="s" placeholder="Nhập từ khoá..." >
+                                </div>
+                                <div class="mb10 col-sm-6">
+                                    <select multiple="true" id="timeWorks" class="chosen-select form-control" name="job_hours[]">
+                                        <option value="1">Sáng (6:00-12:00)</option>
+                                        <option value="2">Chiều (12:00-18:00)</option>
+                                        <option value="3">Tối (18:00-24:00)</option>
+                                        <option value="4">Khuya (24:00-06:00)</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="mb10 col-sm-6">
-                                <?php
-                                $terms = get_terms('job_category', array('hide_empty' => 0));
-                                echo '<select multiple="true" id="cateList" class="chosen-select form-control" name="job_category[]">';
-                                foreach ($terms as $term) {
-                                    echo '<option value="' . $term->term_id . '">' . $term->name . '</option>';
-                                }
-                                echo '</select>';
-                                ?>                                                        
-                            </div>
-                            <div class="mb10 col-sm-6">
-                                <?php
-                                $job_category = get_terms('job_location', array('hide_empty' => 0));
-                                echo '<select multiple="true" id="location" class="chosen-select form-control" name="job_location[]">';
-                                foreach ($job_category as $term) {
-                                    if ($term->parent == 0) {
+                                <div class="mb10 col-sm-6">
+                                    <?php
+                                    $terms = get_terms('job_category', array('hide_empty' => 0));
+                                    echo '<select multiple="true" id="cateList" class="chosen-select form-control" name="job_category[]">';
+                                    foreach ($terms as $term) {
+                                        echo '<option value="' . $term->term_id . '">' . $term->name . '</option>';
+                                    }
+                                    echo '</select>';
+                                    ?>                                                        
+                                </div>
+                                <div class="mb10 col-sm-6">
+                                    <?php
+                                    $job_category = get_terms('job_location', array('hide_empty' => 0));
+                                    echo '<select multiple="true" id="location" class="chosen-select form-control" name="job_location[]">';
+                                    foreach ($job_category as $term) {
+                                        if ($term->parent == 0) {
 //                                        if ($i++ != 0)
-                                        echo '</optgroup>';
-                                        echo '<optgroup label="' . $term->name . '">';
-                                        $id = $term->term_id;
-                                        $args = array("child_of" => $id, 'hide_empty' => 0);
-                                        $this_term = get_terms('job_location', $args);
-                                        foreach ($this_term as $the_term) {
-                                            $term_name = str_replace($term->name, '', $the_term->name);
-                                            echo '<option value="' . $the_term->term_id . '">' . $the_term->name . '</option>';
+                                            echo '</optgroup>';
+                                            echo '<optgroup label="' . $term->name . '">';
+                                            $id = $term->term_id;
+                                            $args = array("child_of" => $id, 'hide_empty' => 0);
+                                            $this_term = get_terms('job_location', $args);
+                                            foreach ($this_term as $the_term) {
+                                                $term_name = str_replace($term->name, '', $the_term->name);
+                                                echo '<option value="' . $the_term->term_id . '">' . $the_term->name . '</option>';
+                                            }
                                         }
                                     }
-                                }
-                                echo '</select>';
-                                ?>
-                            </div>
+                                    echo '</select>';
+                                    ?>
+                                </div>
+                            </div>                            
                         </div>
                         <div class="col-sm-3">
                             <input type="submit" class="btn btn-primary" id="btnSearch" value="Tìm kiếm" />                
@@ -131,20 +123,17 @@
             <div class="ibox-title">
                 <h5 class="text-uppercase text-left">Loại hình công việc</h5>
             </div>
-            <ul class="list">
-                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Kho xưởng</a></li>
-                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Cơm hộp</a></li>
-                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Yamato</a></li>
-                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Mì lạnh</a></li>
-                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Pha chế</a></li>
-                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Làm bếp</a></li>
-                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Chuyển nhà</a></li>
-                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Combini</a></li>
-                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Dọn dẹp</a></li>
-                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Phát báo</a></li>                    
-                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">Phiên dịch</a></li>                    
-                <li class="col-xs-6 col-md-4"><a class="text-color" href="#">IT</a></li>                    
-            </ul>>
+            <ul class="level text-left" id="cat_job">
+                <?php
+                $danhmuc = get_terms('job_category', 'orderby=count&hide_empty=0');
+//                echo '<pre>'; print_r($danhmuc);echo '</pre>';
+                foreach ($danhmuc as $dm) {
+                    ?>
+                    <li class="col-xs-12 col-sm-4">
+                        <a href="<?php echo get_term_link($dm->slug, 'job_category') ?>"><?php echo $dm->name ?> (<span class="soluong"><?php echo esc_html($dm->count) ?></span>)</a>
+                    </li>                                                                
+                <?php } ?>
+            </ul>            
         </div><!--End .row-->
     </div>
     <div class="space clearfix"></div>
@@ -153,10 +142,10 @@
             <div class="ibox-title">
                 <h5 class="text-uppercase">Việc làm mới</h5>
             </div>
-            <div class="clearfix" id="job-new">
+            <div id="job_new">
                 <?php
                 $job_args = array(
-                    'posts_per_page' => 4,
+                    'posts_per_page' => 6,
                     'post_type' => 'cv_job',
                     'post_status' => 'publish'
                 );
@@ -165,49 +154,90 @@
                     while ($job_query->have_posts()) : $job_query->the_post();
                         $map = get_post_meta(get_the_ID(), '_map', true);
                         ?>
-                        <div class="row row_dotted">
-                            <div class="col-sm-3 img-block">
-                                <a href="<?php the_permalink() ?>">
-                                    <?php
-                                    echo wp_get_attachment_image(get_post_meta(get_the_ID(), '_cover_image', true), 'full', '', array('class' => 'img-responsive'));
-                                    ?>
-                                </a>
-                            </div>                    
-                            <div class="col-sm-9 job-block">
-                                <a href="<?php the_permalink() ?>" class="job-title"><?php echo cut_title(get_the_title(), 100) ?></a>
-                                <dl class="dl-horizontal clearfix basic-info">
-                                    <dt>Tiền lương</dt>
-                                    <dd><?php echo get_post_meta(get_the_ID(), '_salary', true); ?></dd>
-                                    <dt>Nơi làm việc</dt>
-                                    <dd><?php echo get_post_meta(get_the_ID(), '_location', true); ?><?php if (!empty($map)): ?> <span class="label label-danger"><a href="<?php echo $map ?>" target="_blank">bản đồ</a></span><?php endif ?></dd>
-                                    <dt>Thời gian làm việc</dt>
-                                    <dd><?php echo get_post_meta(get_the_ID(), '_time', true); ?></dd>
-                                </dl>
-                                <ul class="info list-inline">
-                                    <li><span class="fa fa-calendar"></span> Ngày đăng: <?php the_time('d/m/Y'); ?></li>
-                                    <li><i class="fa fa-eye"></i> Xem: 263 lượt</li>
-                                </ul>
-                                <a href="<?php the_permalink() ?>" class="pull-right">Chi tiết <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                        <div class="job_item clearfix">
+                            <div class="row">
+                                <div class="col-sm-3 img-block">
+                                    <a href="<?php the_permalink() ?>">
+                                        <?php
+                                        echo wp_get_attachment_image(get_post_meta(get_the_ID(), '_cover_image', true), 'full', '', array('class' => 'img-responsive'));
+                                        ?>
+                                    </a>
+                                </div>                    
+                                <div class="col-sm-9 job-block">
+                                    <h3 class="job_title"><a href="<?php the_permalink() ?>" alt="<?php the_title() ?>"><?php the_title() ?></a></h3>
+                                    <dl class="dl-horizontal clearfix basic-info">
+                                        <dt>Tiền lương</dt>
+                                        <dd><?php echo get_post_meta(get_the_ID(), '_salary', true); ?></dd>
+                                        <dt>Nơi làm việc</dt>
+                                        <dd><?php echo get_post_meta(get_the_ID(), '_location', true); ?><?php if (!empty($map)): ?> <span class="label label-danger"><a href="<?php echo $map ?>" target="_blank">bản đồ</a></span><?php endif ?></dd>
+                                        <dt>Thời gian làm việc</dt>
+                                        <dd><?php echo get_post_meta(get_the_ID(), '_time', true); ?></dd>
+                                    </dl>
+                                    <ul class="info list-inline">
+                                        <li><span class="fa fa-calendar"></span> Ngày đăng: <?php the_time('d/m/Y'); ?></li>
+                                        <li><i class="fa fa-eye"></i> Xem: 263 lượt</li>
+                                    </ul>                            
+                                </div>
                             </div>
-                        </div>
+                        </div><!--End .job_item-->
                         <?php
                     endwhile;
                 endif;
                 wp_reset_postdata();
                 ?>            
-            </div><!--End #job-new-->
+            </div><!--End #job_new-->
         </div><!--End .ibox-->
         <div class="clearfix"></div>
         <p class="text-right">
             <a href="#" target="_blank" class="view-more">Xem tất cả công việc <i class="fa fa-angle-double-right"></i></a>
         </p>
-        <!-- Right column -->
+
+        <div class="row">
+            <div id="pinned_article">
+                <div class="col-xs-6 col-sm-3 item">
+                    <a href="#">
+                        <div class="box-hover">
+                            <img src="<?php echo get_template_directory_uri() ?>/img/ipad-632394.jpg" alt="" />
+                            <div class="img-shade"></div>
+                            <div class="article_til">Quy tắc làm thêm ở Nhật</div>
+                        </div>                        
+                    </a>
+                </div>
+                <div class="col-xs-6 col-sm-3 item">
+                    <a href="#">
+                        <div class="box-hover">
+                            <img src="<?php echo get_template_directory_uri() ?>/img/avatar-2191918_1920.jpg" alt="" />
+                            <div class="img-shade"></div>                        
+                            <div class="article_til">Sổ tay hướng dẫn làm thêm</div>
+                        </div>                        
+                    </a>
+                </div>
+                <div class="col-xs-6 col-sm-3 item">
+                    <a href="#">
+                        <div class="box-hover">
+                            <img src="<?php echo get_template_directory_uri() ?>/img/qa.jpg" alt="" />
+                            <div class="img-shade"></div>                        
+                            <div class="article_til">Hỏi & đáp</div>
+                        </div>
+                    </a>                    
+                </div>
+                <div class="col-xs-6 col-sm-3 item">
+                    <a href="#">
+                        <div class="box-hover">
+                            <img src="<?php echo get_template_directory_uri() ?>/img/avatar-2191918_1920.jpg" alt="" />
+                            <div class="img-shade"></div>
+                            <div class="article_til">Về asibaito</div>
+                        </div>                        
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div><!--End .container-->
 <section class="bg-gray">
     <div class="container">
         <div class="row">
-            <h3 class="top-title text-uppercase text-center">Blog</h3>
+            <h3 class="top-title text-uppercase text-center">Tin tức</h3>
             <div class="col-sm-4">
                 <div class="ibox shadow">
                     <div class="ibox-content blog-content item">
@@ -268,58 +298,7 @@
         </div>
     </div><!--End .container-->
 </section><!--End .bg-gray-->
-<div class="container">
-    <div class="row">
-        <div class="ibox box-level shadow text-center">
-            <div class="ibox-title">
-                <h5 class="text-uppercase text-left">Hỏi đáp, chia sẽ kinh nghiệm</h5>
-            </div>
-            <ul class="level clearfix">
-                <li class="col-sm-4 col-xs-6">
-                    <a href="#" class="text-uppercase text-center icon-square"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Q&A</a>
-                    <span class="text-uppercase">Các câu hỏi từ các bạn</span>
-                </li>
-                <li class="col-sm-4 col-xs-6">
-                    <a href="#" target="_blank" class="text-uppercase text-center icon-square"><i class="fa fa-commenting-o" aria-hidden="true"></i>FAQ</a>
-                    <span class="text-uppercase">Các vấn đề liên quan tới dhs, tns</span>
-                </li>                
-            </ul><!--End .level-->
-        </div><!--End .row-->
-    </div>
-</div>
-<div id="modal_qa" class="modal fade">
-    <div class="modal-dialog">        
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Hỏi đáp</h4>
-                </div>
-                <div class="modal-body">                
-                    <form action="<?php echo get_page_link(180)?>" method="post" id="frmQA" name="frmQA">
-                    <input type="hidden" name="baito_qa_name" value="e6e86e77e3a32b225f06d29d599d9cdf">
-                    <select class="form-control" name="qa-type">
-                        <option value>Chọn danh mục</option>
-                    <?php 
-                    $taxonomy_qa = get_custom_taxonomy("category_qa");
-                    
-                    if(!empty($taxonomy_qa)):
-                        foreach ($taxonomy_qa as $k_qa => $v_qa):?>
-                        <option value="<?php echo $k_qa?>"><?php echo $v_qa?></option>
-                        <?php endforeach;
-                    endif;
-                    ?>
-                    </select>                                            
-                    <input name="qa-title" type="text" placeholder="Chủ đề" class="form-control">
-                    <textarea name="qa-content" rows="5" placeholder="Nội dung cần tư vấn" class="form-control"></textarea>                
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="closedQA">Đóng</button>
-                    <button type="button" class="btn btn-primary" id="submitQA">Gửi</button>
-                </div>
-            </div>        
-    </div>
-</div><!--End #qa-modal-->
+
 <?php
 get_footer();
 

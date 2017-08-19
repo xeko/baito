@@ -60,7 +60,7 @@
                                 <?php edit_post_link(); ?>
 
                                 <div class="btnentry-inner text-center clearfix">
-                                    <a class="btn btn-default btn-lg btn-block" href="<?php echo get_page_link(94) ?>?jobID=<?php echo the_ID() ?>">Ứng tuyển</a>
+                                    <a class="btn btn-default btn-lg btn-block" href="<?php echo get_page_link(14) ?>?jobID=<?php echo the_ID() ?>">Ứng tuyển</a>
                                 </div>
                             </article>
                             <!-- /article -->

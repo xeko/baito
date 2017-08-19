@@ -1,10 +1,4 @@
 <?php
-/*
- *  Author: HoaTong | hoaitvn@gmail.com
- *  URL: dentalservice.jp
- *  Custom functions, support, custom post types and more.
- */
-
 require_once(TEMPLATEPATH . '/admin/admin-functions.php');
 require_once(TEMPLATEPATH . '/admin/admin-interface.php');
 require_once(TEMPLATEPATH . '/admin/theme-settings.php');
@@ -14,6 +8,8 @@ require_once(TEMPLATEPATH . '/inc/country.php');
 require_once(TEMPLATEPATH . '/inc/job-utility.php');
 require_once(TEMPLATEPATH . '/inc/post_type-faq.php');
 require_once(TEMPLATEPATH . '/inc/post_type-qa.php');
+require_once(TEMPLATEPATH . '/inc/post-recent.php');
+require_once(TEMPLATEPATH . '/inc/wp-custom-post-type-archive.php');
 
 define('THEME_NAME', 'baito');
 define('BAITO_URI', get_template_directory_uri());
@@ -39,7 +35,7 @@ if (function_exists('add_theme_support')) {
     add_image_size('medium', 250, '', true); // Medium Thumbnail
     add_image_size('small', 120, '', true); // Small Thumbnail
     add_image_size('custom-size', 700, 200, true); // Custom Thumbnail Size call using the_post_thumbnail('custom-size');
-    // Add Support for Custom Backgrounds - Uncomment below if you're going to use
+    
     // Enables post and comment RSS feed links to head
     add_theme_support('automatic-feed-links');
 
@@ -255,11 +251,6 @@ function get_tags_custom($ID) {
     return $html;
 }
 
-// Remove Admin bar
-function remove_admin_bar() {
-    return false;
-}
-
 // Remove 'text/css' from our enqueued stylesheet
 function html5_style_remove($tag) {
     return preg_replace('~\s+type=["\'][^"\']++["\']~', '', $tag);
@@ -303,7 +294,6 @@ add_filter('wp_nav_menu_args', 'my_wp_nav_menu_args'); // Remove surrounding <di
 add_filter('the_category', 'remove_category_rel_from_category_list'); // Remove invalid rel attribute
 add_filter('the_excerpt', 'shortcode_unautop'); // Remove auto <p> tags in Excerpt (Manual Excerpts only)
 add_filter('the_excerpt', 'do_shortcode'); // Allows Shortcodes to be executed in Excerpt (Manual Excerpts only)
-add_filter('show_admin_bar', 'remove_admin_bar'); // Remove Admin bar
 add_filter('style_loader_tag', 'html5_style_remove'); // Remove 'text/css' from enqueued stylesheet
 add_filter('post_thumbnail_html', 'remove_thumbnail_dimensions', 10); // Remove width and height dynamic attributes to thumbnails
 add_filter('image_send_to_editor', 'remove_thumbnail_dimensions', 10); // Remove width and height dynamic attributes to post images
@@ -720,21 +710,6 @@ function insert_attachment($file_handler, $post_id, $setthumb = 'false') {
     return $attach_id;
 }
 
-function add_search_to_menu($items, $args) {
-    if ('main-menu' === $args->theme_location) {
-        $items .= '<li class="search-header-wrap hidden-xs hidden-sm">';
-        $items .= '<a id="search-icon-desk">'
-                . '<div class="btnsearch"><i class="fa fa-search" aria-hidden="true"></i></div>';
-        $items .= '<form class="search-header searchform" action="' . home_url('/') . '">
-                <input name="s" class="search-input" type="text" value="' . get_search_query() . '" />
-              </form>';
-        $items .= '</a></li>';
-    }
-    return $items;
-}
-
-//add_filter('wp_nav_menu_items', 'add_search_to_menu', 10, 2);
-
 function cut_title($text, $len = 30) { //Hàm cắt tiêu đề Unicode
     mb_internal_encoding('UTF-8');
     if ((mb_strlen($text, 'UTF-8') > $len))
@@ -793,10 +768,53 @@ function toggle_menu_atts($atts, $item, $args) {
 function get_custom_taxonomy($name = "") {
     $terms = get_terms($name, array('hide_empty' => FALSE));
     $data = array();
-    if (!empty($terms) && !is_wp_error($terms)) {        
+    if (!empty($terms) && !is_wp_error($terms)) {
         foreach ($terms as $term) {
-            $data[$term->slug] = $term->name;           
+            $data[$term->slug] = $term->name;
         }
     }
     return $data;
 }
+
+function baito_form_QA() {
+    ?>
+    <div id="modal_qa" class="modal fade">
+        <div class="modal-dialog">        
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Hỏi đáp</h4>
+                </div>
+                <div class="modal-body">                
+                    <form action="<?php echo get_page_link(180) ?>" method="post" id="frmQA" name="frmQA">
+                        <input type="hidden" name="baito_qa_name" value="e6e86e77e3a32b225f06d29d599d9cdf">
+                        <select class="form-control" name="qa_type">
+                            <option value>Chọn danh mục</option>
+                            <?php
+                            $taxonomy_qa = get_custom_taxonomy("category_qa");
+
+                            if (!empty($taxonomy_qa)):
+                                foreach ($taxonomy_qa as $k_qa => $v_qa):
+                                    ?>
+                                    <option value="<?php echo $k_qa ?>"><?php echo $v_qa ?></option>
+                                    <?php
+                                endforeach;
+                            endif;
+                            ?>
+                        </select>                                            
+                        <input name="qa_title" type="text" placeholder="Chủ đề" class="form-control">
+                        <textarea name="qa_content" rows="5" placeholder="Nội dung cần tư vấn" class="form-control"></textarea>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="closedQA">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="submitQA">Gửi</button>
+                </div>
+            </div>        
+        </div>
+    </div><!--End #qa-modal-->
+    
+    <?php
+}
+
+add_action( 'wp_footer', 'baito_form_QA', 100 );

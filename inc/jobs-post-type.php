@@ -129,7 +129,7 @@ $meta_box = array(
     'context' => 'normal',
     'priority' => 'high',
     'fields' => array(
-        array('id' => '_cover_image', 'label' => __('Cover Image', 'baito'), 'type' => 'image'),
+        array('id' => '_cover_image', 'label' => __('Ảnh bìa', 'baito'), 'type' => 'image'),
         array('id' => '_salary', 'label' => __('Tiền lương', 'baito'), 'type' => 'text'),
         array('id' => '_location', 'label' => __('Nơi làm việc', 'baito'), 'type' => 'text'),
         array('id' => '_map', 'label' => __('Bản đồ', 'baito'), 'type' => 'text'),
@@ -594,9 +594,11 @@ function cv_job_manage_post_columns($column, $post_id) {
 
 /* Popular Posts by Views */
 
+global $count_key;
+$count_key = 'job_views_count';
+
 function wp_set_post_views($postID) {
-//    global $count_key;
-    $count_key = 'job_views_count';
+    global $count_key;
     $count = get_post_meta($postID, $count_key, true);
     if ($count == '') {
         $count = 0;
@@ -621,7 +623,7 @@ function wp_track_post_views($post_id) {
 add_action('wp_head', 'wp_track_post_views');
 
 function get_PostViews($post_ID) {
-    $count_key = 'job_views_count';
+    global $count_key;
     $count = get_post_meta($post_ID, $count_key, true);
     $count = empty($count) ? 0 : $count;
     return $count;
@@ -641,11 +643,12 @@ function register_post_column_views_sortable($newcolumn) {
 add_filter('manage_edit-cv_job_sortable_columns', 'register_post_column_views_sortable');
 
 function sort_views_column($vars) {
+    global $count_key;
     if (isset($vars['orderby']) && 'job_view' == $vars['orderby']) {
         switch ($vars['orderby']):
             case 'job_view':
                 $vars = array_merge($vars, array(
-                    'meta_key' => 'job_views_count',
+                    'meta_key' => $count_key,
                     'orderby' => 'meta_value_num')
                 );
                 break;
@@ -663,13 +666,14 @@ function sort_views_column($vars) {
 add_filter('request', 'sort_views_column');
 
 function shortcode_top_views($params) {
+    global $count_key;
     $display = isset($params['num']) ? (int) $params['num'] : 5;
 
     $conditions = array(
         'post_type' => array('post'),
         'posts_per_page' => $display,
         'post_status' => 'publish',
-        'meta_key' => 'job_views_count',
+        'meta_key' => $count_key,
         'orderby' => 'meta_value_num',
         'order' => 'DESC'
     );
