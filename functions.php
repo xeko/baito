@@ -142,6 +142,9 @@ function header_scripts() {
 
         wp_register_script('matchHeight', get_template_directory_uri() . '/js/jquery.matchHeight-min.js', array('jquery'), '1.4.2');
         wp_enqueue_script('matchHeight'); // Enqueue it!
+        
+        wp_register_script('sticky', get_template_directory_uri() . '/js/sticky.js', array('jquery'), '');
+//        wp_enqueue_script('sticky'); // Enqueue it!
     }
 }
 
@@ -818,3 +821,30 @@ function baito_form_QA() {
 }
 
 add_action( 'wp_footer', 'baito_form_QA', 100 );
+
+function wpdocs_excerpt_more( $more ) {
+    return ' [...]';
+}
+add_filter( 'excerpt_more', 'wpdocs_excerpt_more' );
+
+//Get taxonomy by post_type
+add_shortcode('cat_list', 'cat_by_ID');
+function cat_by_ID($atts, $content) {
+    extract( shortcode_atts( array(
+        'type' => 'job_category'
+    ), $atts ) );
+
+    $terms = get_terms( $type, $args = array() );
+    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+        $term_list = '<ul id="cat_job">';
+        foreach ( $terms as $term ) {
+            $term_list .= '<li><a href="' . esc_url( get_term_link( $term ) ) . '">' . $term->name . '</a></li>';
+        }
+        $term_list .= '</ul>';
+    }
+    return $term_list;
+}
+
+function custom_thumb($id, $thumb_key = "_cover_image") {
+    echo wp_get_attachment_image(get_post_meta($id, $thumb_key, true), array(80, 80), '', array('class' => 'pull-left'));
+}

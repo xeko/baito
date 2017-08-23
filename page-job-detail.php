@@ -151,10 +151,7 @@
                         </div>
                     </div><!--End .entry-content-->
                 </section>
-            </div>
-            <div class="col-md-4">
-                <?php get_sidebar() ?>
-            </div>
+            </div>            
         </div>
     </div>
 </div>

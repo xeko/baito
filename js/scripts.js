@@ -119,7 +119,7 @@ jQuery(document).ready(function ($) {
                                 message: 'Email không đúng định dạng'
                             },
                             remote: {
-                                url: 'is-exist-apply/',
+                                url: 'validate-job-apply/',
                                 message: 'Email đã đăng ký công việc này',
                                 type: 'POST',
                                 data: {
@@ -246,6 +246,6 @@ jQuery(document).ready(function ($) {
     });
     $("#closedQA").on('click', function () {
         $("#wrapper").load('http://localhost/arubaito/').fadeIn("slow");
-    });
+    });       
 
 });

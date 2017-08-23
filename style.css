@@ -507,6 +507,9 @@ nav.navbar {
     color: #FFFFFF;
     font-weight: bold;
 }
+#pinned_article {
+    margin: 36px 0;
+}
 #pinned_article [class*="col-"] {
     padding-left: 0;
     padding-right: 0;
@@ -615,7 +618,6 @@ nav.navbar {
 }
 .top-title {
     margin: 0 0 12px;
-    font-size: 18px;    
 }
 .level span {
     font-size: 0.8em;
@@ -1578,6 +1580,11 @@ h3.title-tbl span {
 }
 .widget_recentpost .media img {
     max-width: 80px;
+}
+.section blockquote {
+    border-left-color: #ed5464;
+    color: #000;
+    font-weight: bold;
 }
 
 /*!------------------------------------*\
